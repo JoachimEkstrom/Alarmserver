@@ -26,6 +26,9 @@
     <Compile Include="POUs\POUPOU.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\POUsdf.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
