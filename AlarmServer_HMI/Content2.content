@@ -1,11 +1,14 @@
 ﻿<div id="Content2" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="800" data-tchmi-height="640">
-
-<div id="TcHmiCheckbox" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="444" data-tchmi-left-unit="px" data-tchmi-text="Checkbox" data-tchmi-top="222" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px">
-
-</div>
-
-<div id="TcHmiTextblock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="310" data-tchmi-left-unit="px" data-tchmi-text="Textblock" data-tchmi-top="329" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="True">
-
-</div>
-
+    <div>
+        <table id="mytable" width="100%" border="1" cellpadding="2" cellspacing="2" style="background-color: #ffffff;">
+            <tr valign="top">
+                <td class="td">Bazinga<br />  </td>
+                <td class="td">dqewed<br />  </td>
+            </tr>
+            <tr valign="top">
+                <td class="td">qwdds<br />  </td>
+                <td class="td">xxxxx<br />  </td>
+            </tr>
+        </table>
+    </div>
 </div>
