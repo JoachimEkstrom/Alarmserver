@@ -285,6 +285,13 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# HMI folder not to be uploaded
+Alarmserver_HMI/ADS
+Alarmserver_HMI/TcHmiLua
+Alarmserver_HMI/TcHmiSqliteLogger
+Alarmserver_HMI/TcHmiSrv
+Alarmserver_HMI/TcHmiUserManagement
+
 # Visual Studio 6 build log
 *.plg
 
