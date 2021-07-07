@@ -28,6 +28,6 @@
     "bin/"
   ],
   "include": [
-    "C:/Users/joachim.ekstrom/source/repos/Alarmserver/Packages/Beckhoff.TwinCAT.HMI.Framework.12.746.3/runtimes/native1.12-tchmi/TcHmi.d.ts"
+    "C:/Users/joachim.ekstrom/Source/Repos/Alarmserver/Packages/Beckhoff.TwinCAT.HMI.Framework.12.746.3/runtimes/native1.12-tchmi/TcHmi.d.ts"
   ]
 }
