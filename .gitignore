@@ -373,4 +373,4 @@ FodyWeavers.xsd
 /.engineering_servers/AlarmServer_HMI/logger.db-journal
 /.engineering_servers/AlarmServer_HMI
 /.Alarmserver_HMI/Server/
-/.AlarmServer/Alarmserver.project.~u
+Alarmserver.project.~u
