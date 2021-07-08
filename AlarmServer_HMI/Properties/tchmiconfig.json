@@ -41,11 +41,6 @@
       "url": "Content1.content",
       "preload": false,
       "keepAlive": false
-    },
-    {
-      "url": "Content2.content",
-      "preload": false,
-      "keepAlive": false
     }
   ],
   "views": [
