@@ -286,11 +286,11 @@ FakesAssemblies/
 node_modules/
 
 # HMI folder not to be uploaded
-Alarmserver_HMI/ADS
-Alarmserver_HMI/TcHmiLua
-Alarmserver_HMI/TcHmiSqliteLogger
-Alarmserver_HMI/TcHmiSrv
-Alarmserver_HMI/TcHmiUserManagement
+Alarmserver_HMI/Server/ADS/
+Alarmserver_HMI/Server/TcHmiLua/
+Alarmserver_HMI/Server/TcHmiSqliteLogger/
+Alarmserver_HMI/Server/TcHmiSrv/
+Alarmserver_HMI/Server/TcHmiUserManagement/
 
 # Visual Studio 6 build log
 *.plg
@@ -372,4 +372,5 @@ FodyWeavers.xsd
 /.engineering_servers/AlarmServer_HMI/TcHmiSrv.lock
 /.engineering_servers/AlarmServer_HMI/logger.db-journal
 /.engineering_servers/AlarmServer_HMI
-/.Alarmserver_HMI/Server
+/.Alarmserver_HMI/Server/
+/.AlarmServer_HMI/Alarmserver.project.~u
