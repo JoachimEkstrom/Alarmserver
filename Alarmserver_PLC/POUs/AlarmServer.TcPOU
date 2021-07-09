@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="AlarmServer" Id="{3d2cc0da-a4c3-43eb-906a-300187b5ba2d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AlarmServer
+VAR_IN_OUT
+	AlarmData: ARRAY [0..2000] OF Alarms;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddToDb" Id="{bacaf7d5-fbb6-464d-b066-8afef850f3b6}">
+      <Declaration><![CDATA[METHOD PUBLIC AddToDb : BOOL
+VAR_INPUT
+		Alarm: Alarms;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="NewAlarm" Id="{ff3e33e4-bc96-4829-912e-fd21b8af1018}">
+      <Declaration><![CDATA[METHOD PUBLIC NewAlarm : BOOL
+VAR_INPUT
+	sName: STRING;
+	AlarmId: UINT;
+	sAlarmText: STRING;	
+END_VAR
+VAR
+	Alarm: Alarms;
+	i: UINT;
+	bAlarmExists : BOOL;
+	
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Alarm.sName := sName;
+Alarm.uiID := AlarmId;
+Alarm.sAlarmText := sAlarmText; 
+Alarm.bIsActive := TRUE;
+Alarm.bIsUsed := TRUE;
+Alarm.tActiveStartTime :=  FB_LocalSystemTime();
+
+FOR i:=0 TO SIZEOF(AlarmData) - 1 BY 1 DO
+	
+	IF (AlarmData[i].bIsUsed = TRUE AND AlarmData[i].sName = sName) THEN
+		AlarmData[i].uiRepeatCount := AlarmData[i].uiRepeatCount + 1;
+		AlarmData[i].tActiveStartTime := Alarm.tActiveStartTime;
+		bAlarmExists:= TRUE;
+		EXIT;
+	END_IF
+	
+END_FOR
+ 
+IF bAlarmExists = FALSE THEN
+	
+	FOR i:=0 TO SIZEOF(AlarmData) - 1 BY 1 DO
+		
+		IF (AlarmData[i].bIsUsed = FALSE) THEN
+			AlarmData[i] := Alarm;
+			EXIT;	
+		END_IF
+		
+	END_FOR
+END_IF
+
+// Always add to DB
+
+AlarmServer.AddToDb(Alarm);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="AlarmServer">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="AlarmServer.AddToDb">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="AlarmServer.NewAlarm">
+      <LineId Id="17" Count="7" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="54" Count="2" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="51" Count="1" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
