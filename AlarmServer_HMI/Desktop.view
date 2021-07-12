@@ -3,7 +3,7 @@
 
   </div>
 
-<div id="UserControl1_1" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="614" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-target-user-control="AlarmViewer.usercontrol" data-tchmi-top="77" data-tchmi-top-unit="px" data-tchmi-width="1113" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-selectedrow="%s%PLC1.MAIN.Alarms::irowSelected%/s%" data-tchmi-valuechanged="%s%PLC1.MAIN.Alarms::iValueChanged%/s%">
+<div id="UserControl1_1" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="614" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-target-user-control="AlarmViewer.usercontrol" data-tchmi-top="77" data-tchmi-top-unit="px" data-tchmi-width="1113" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-selectedrow="%s%PLC1.MAIN.Alarms::irowSelected%/s%" data-tchmi-valuechanged="%s%PLC1.MAIN.Alarms::iValueChanged%/s%" data-tchmi-alarmdata="%s%PLC1.MAIN.Alarms%/s%">
 
 </div>
 

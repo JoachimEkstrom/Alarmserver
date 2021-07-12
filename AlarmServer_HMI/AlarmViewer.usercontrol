@@ -22,7 +22,7 @@
 
         function updateAlarmList() {
             console.log("Updating alarm list")
-            TcHmi.Symbol.readEx2('%s%PLC1.MAIN.Alarms::AlarmData%/s%', function (data) {
+            TcHmi.Symbol.readEx2('%pp%Alarmdata::AlarmData%/pp%', function (data) {
                 if (data.error === TcHmi.Errors.NONE) {
                     // Handle result value... 
                     //console.log(data.value)
@@ -84,7 +84,7 @@
 
         function selectRow(x) {
            console.log(x);
-            TcHmi.Symbol.writeEx('%s%PLC1.MAIN.Alarms::irowSelected%/s%', x.rowIndex - 1, function (data) {
+            TcHmi.Symbol.writeEx('%pp%Alarmdata::irowSelected%/pp%', x.rowIndex - 1, function (data) {
                 if (data.error === TcHmi.Errors.NONE) {
                     // Handle success... 
                     console.log("OK")
@@ -133,7 +133,7 @@
 
 </div>
 
-<div id="TcHmiTextbox" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-top="417" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-text="%pp%SelectedRow%/pp%">
+<div id="TcHmiTextbox" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-top="417" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-text="%pp%Alarmdata::irowSelected%/pp%">
 <script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
 {
   "top": 3,
@@ -164,7 +164,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%s%PLC1.MAIN.Alarms::bAckAllAlarms%/s%",
+        "symbolExpression": "%pp%Alarmdata::bAckAllAlarms%/pp%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",
@@ -189,7 +189,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%s%PLC1.MAIN.Alarms::bAckAlarm%/s%",
+        "symbolExpression": "%pp%Alarmdata::bAckAlarm%/pp%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",
@@ -203,7 +203,7 @@
 </script>
 </div>
 
-<div id="TcHmiTextbox_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-top="453" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-text="%pp%Valuechanged%/pp%">
+<div id="TcHmiTextbox_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-top="453" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-text="%pp%Alarmdata::iValueChanged%/pp%">
 <script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
 {
   "top": 3,
@@ -223,8 +223,7 @@
         "objectType": "JavaScript",
         "active": true,
         "sourceLines": [
-          "updateAlarmList();",
-          "\nconsole.log(\"Value changed, updating the alarm log\");"
+          "updateAlarmList();\nconsole.log(\"Value changed, updating the alarm log\");"
         ],
         "injectContextObject": false,
         "asyncWait": true,

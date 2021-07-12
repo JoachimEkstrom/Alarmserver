@@ -1,35 +1,19 @@
 ﻿{
   "parameters": [
     {
-      "name": "data-tchmi-selectedrow",
-      "displayName": "SelectedRow",
+      "name": "data-tchmi-alarmdata",
+      "displayName": "Alarmdata",
       "visible": true,
-      "type": "tchmi:general#/definitions/String",
+      "type": "tchmi:project#/definitions/MainAlarmServerData",
       "category": "",
       "description": "",
       "requiredOnCompile": false,
       "readOnly": false,
       "bindable": true,
       "heritable": true,
-      "propertyName": "SelectedRow",
-      "propertySetterName": "setSelectedRow",
-      "propertyGetterName": "getSelectedRow",
-      "refTo": ""
-    },
-    {
-      "name": "data-tchmi-valuechanged",
-      "displayName": "Valuechanged",
-      "visible": true,
-      "type": "tchmi:general#/definitions/String",
-      "category": "",
-      "description": "",
-      "requiredOnCompile": false,
-      "readOnly": false,
-      "bindable": true,
-      "heritable": true,
-      "propertyName": "Valuechanged",
-      "propertySetterName": "setValuechanged",
-      "propertyGetterName": "getValuechanged",
+      "propertyName": "Alarmdata",
+      "propertySetterName": "setAlarmdata",
+      "propertyGetterName": "getAlarmdata",
       "refTo": ""
     }
   ],
