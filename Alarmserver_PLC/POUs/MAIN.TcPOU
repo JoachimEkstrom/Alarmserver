@@ -3,13 +3,69 @@
   <POU Name="MAIN" Id="{9a484491-9707-4649-bff0-788e52f873b2}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	Alarms : AlarmServer;	
+	Berra: BOOL;
+	Baz: BOOL;
+	Ack: BOOL;
+	clear: BOOL;
+	ddd: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[IF Berra THEN
+	Berra := FALSE;
+		
+	Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
+	Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
+	Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
+	Alarms.NewAlarm(sName:='Bosse', sAlarmText:= 'Bazinga');
+END_IF
+IF Baz THEN
+	Baz := FALSE;
+		
+	Alarms.NewAlarm(sName:='Bingo', sAlarmText:= 'Ett nytt larm');
+	Alarms.NewAlarm(sName:='Baz', sAlarmText:= 'Ett nytt larm');
+	Alarms.NewAlarm(sName:='Tjo', sAlarmText:= 'Ett nytt larm');
+	Alarms.NewAlarm(sName:='Tjo', sAlarmText:= 'Bazinga');
+END_IF
+
+
+IF Ack THEN
+	Ack := FALSE;
+	Alarms.AckAlarm(sName:='Bosse');
+END_IF
+
+IF clear THEN
+	clear := FALSE;
+	Alarms.ClearAlarm('Baz');
+END_IF
+
+IF ddd THEN
+	ddd := FALSE;
+		
+	Alarms.NewAlarm(sName:='Braf', sAlarmText:= 'Ett nytt larm');
+	Alarms.NewAlarm(sName:='Gizmo', sAlarmText:= 'Ett nytt larm');
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="17" Count="3" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="31" Count="6" />
       <LineId Id="2" Count="0" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="54" Count="5" />
+      <LineId Id="53" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

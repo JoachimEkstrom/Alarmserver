@@ -9,8 +9,9 @@ STRUCT
 	bIsAcknowledged		: BOOL;
 	uiID				: UINT;
 	sAlarmText			: STRING;
-	tActiveStartTime	: DT;
-	tAcknowlegedTime	: DT;
+	tActiveStartTime	: STRING;
+	tAcknowlegedTime	: STRING;
+	tClearedTime		: STRING;
 	uiRepeatCount		: UINT;
 	
 END_STRUCT
