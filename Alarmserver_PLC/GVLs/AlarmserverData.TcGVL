@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
-  <GVL Name="AlarmserverData" Id="{9e665356-d5a8-477e-9fe1-d0841c9aa88f}">
-    <Declaration><![CDATA[{attribute 'qualified_only'}
-VAR_GLOBAL PERSISTENT
-	AlarmserverData : ARRAY [0..2000] OF Alarms; 
-END_VAR]]></Declaration>
-  </GVL>
-</TcPlcObject>

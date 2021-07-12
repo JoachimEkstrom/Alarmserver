@@ -1,0 +1,239 @@
+﻿<div id="UserControl1" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControl" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="1113" data-tchmi-height="614" data-tchmi-width-unit="px" data-tchmi-height-unit="px" data-tchmi-creator-viewport-width="1680" data-tchmi-creator-viewport-height="900" data-tchmi-left-unit="px" data-tchmi-top-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+<div id="TcHmiHtmlHost" data-tchmi-type="TcHmi.Controls.System.TcHmiHtmlHost" data-tchmi-height="359" data-tchmi-height-unit="px" data-tchmi-left="0" data-tchmi-left-unit="px" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="1113" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+    <div>
+        <table id="mytable">
+            <thead>
+                <tr>
+                    <th> Alarm Name </th>
+                    <th> isActive </th>
+                    <th> isAcknowledged </th>
+                    <th> AlarmText </th>
+                    <th> StartTime </th>
+                    <th> AckTime </th>
+                    <th> RepeatCount </th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+    <script>
+
+        function updateAlarmList() {
+            console.log("Updating alarm list")
+            TcHmi.Symbol.readEx2('%s%PLC1.MAIN.Alarms::AlarmData%/s%', function (data) {
+                if (data.error === TcHmi.Errors.NONE) {
+                    // Handle result value... 
+                    //console.log(data.value)
+                    var alarms = data.value;
+                    let table = document.getElementById('mytable')
+                    let oldTbody = document.getElementById('tbody') 
+                    table.removeChild(oldTbody) // Remove old alarms
+                    let newTbody = document.createElement('tbody')
+                    newTbody.id = 'tbody'
+                    table.appendChild(newTbody);
+
+
+                    for (let i = 0; i < alarms.length; i++) {
+                        if (alarms[i].bIsUsed) {
+                            let tr = document.createElement('tr')
+                            tr.addEventListener('click', function () { selectRow(this) });
+                            let sName = document.createElement('td')
+                            sName.innerHTML = alarms[i].sName;
+                            tr.appendChild(sName)
+                            let isActive = document.createElement('td')
+                            isActive.innerHTML = alarms[i].bIsActive;
+                            tr.appendChild(isActive)
+                            let isAck = document.createElement('td')
+                            isAck.innerHTML = alarms[i].bIsAcknowledged;
+                            tr.appendChild(isAck)
+                            let sAlarmText = document.createElement('td')
+                            sAlarmText.innerHTML = alarms[i].sAlarmText;
+                            tr.appendChild(sAlarmText)
+                            let tActiveStartTime = document.createElement('td')
+                            tActiveStartTime.innerHTML = alarms[i].tActiveStartTime;
+                            tr.appendChild(tActiveStartTime)
+                            let tAcknowlegedTime = document.createElement('td')
+                            tAcknowlegedTime.innerHTML = alarms[i].tAcknowlegedTime;
+                            tr.appendChild(tAcknowlegedTime)
+                            let uiRepeatCount = document.createElement('td')
+                            uiRepeatCount.innerHTML = alarms[i].uiRepeatCount;
+                            tr.appendChild(uiRepeatCount)
+
+                            if (alarms[i].bIsActive && !alarms[i].bIsAcknowledged) {
+                                tr.style.backgroundColor = "red";
+                            }
+                            
+
+                            let tbody = document.getElementById('tbody');
+                            tbody.appendChild(tr)
+                        }
+
+                    }
+
+
+                } else {
+                    console.log("Could not read the alarmserver array data =(")
+                }
+            });
+
+
+        }
+
+
+        function selectRow(x) {
+           console.log(x);
+            TcHmi.Symbol.writeEx('%s%PLC1.MAIN.Alarms::irowSelected%/s%', x.rowIndex - 1, function (data) {
+                if (data.error === TcHmi.Errors.NONE) {
+                    // Handle success... 
+                    console.log("OK")
+
+                } else {
+                    // Handle error... 
+                    console.log("NOTOK")
+                }
+            });
+        }
+
+        updateAlarmList();
+    </script>
+    <style>
+        table {
+          
+            width: 100%;
+            border: 1px solid black;
+            background-color: #ffffff;
+            border-collapse: collapse;
+        }
+        th {
+            width: 100%;
+            height: 30px;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: central;
+            
+        }
+
+        thead,
+        tbody {
+            display: block;
+            width: 100%;
+        }
+
+        tbody {
+           
+            max-height: 150px;
+            overflow: auto;
+        }
+    </style>
+
+
+</div>
+
+<div id="TcHmiTextbox" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-top="417" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-text="%pp%SelectedRow%/pp%">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+</div>
+
+<div id="TcHmiTextblock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-text="Selected row" data-tchmi-top="381" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+</div>
+
+<div id="TcHmiDateTimeDisplay" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiDateTimeDisplay" data-tchmi-height="48" data-tchmi-height-unit="px" data-tchmi-left="600" data-tchmi-left-unit="px" data-tchmi-top="381" data-tchmi-top-unit="px" data-tchmi-width="138" data-tchmi-width-unit="px">
+
+</div>
+
+<div id="TcHmiButton_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="534" data-tchmi-left-unit="px" data-tchmi-text="Ack ALL" data-tchmi-top="511" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiButton_3.onPressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%PLC1.MAIN.Alarms::bAckAllAlarms%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": true
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiButton_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="397" data-tchmi-left-unit="px" data-tchmi-text="Ack" data-tchmi-top="511" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiButton_2.onPressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%PLC1.MAIN.Alarms::bAckAlarm%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": true
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiTextbox_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-top="453" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-text="%pp%Valuechanged%/pp%">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiTextbox_1.onTextChanged",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "updateAlarmList();",
+          "\nconsole.log(\"Value changed, updating the alarm log\");"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+</div>

@@ -115,6 +115,13 @@
   <Target Name="ReBuild" DependsOnTargets="Clean; Build" />
   <Target Name="Clean" DependsOnTargets="BaseClean" />
   <ItemGroup>
+    <Content Include="AlarmViewer.usercontrol">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="AlarmViewer.usercontrol.json">
+      <SubType>Content</SubType>
+      <DependentUpon>AlarmViewer.usercontrol</DependentUpon>
+    </Content>
     <Folder Include="Fonts\" />
     <Folder Include="Images" />
     <Folder Include="Images\Manifest" />

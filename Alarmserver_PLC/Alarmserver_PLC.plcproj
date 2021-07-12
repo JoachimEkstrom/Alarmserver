@@ -17,12 +17,8 @@
     <LibraryReferences>{def3425c-1c98-4f4f-8d4e-b8168cd451ce}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GVLs\Alarms.TcDUT">
+    <Compile Include="DUTs\Alarms.TcDUT">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GVLs\AlarmserverData.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
@@ -36,7 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
-    <Folder Include="GVLs" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

@@ -1,0 +1,39 @@
+﻿{
+  "parameters": [
+    {
+      "name": "data-tchmi-selectedrow",
+      "displayName": "SelectedRow",
+      "visible": true,
+      "type": "tchmi:general#/definitions/String",
+      "category": "",
+      "description": "",
+      "requiredOnCompile": false,
+      "readOnly": false,
+      "bindable": true,
+      "heritable": true,
+      "propertyName": "SelectedRow",
+      "propertySetterName": "setSelectedRow",
+      "propertyGetterName": "getSelectedRow",
+      "refTo": ""
+    },
+    {
+      "name": "data-tchmi-valuechanged",
+      "displayName": "Valuechanged",
+      "visible": true,
+      "type": "tchmi:general#/definitions/String",
+      "category": "",
+      "description": "",
+      "requiredOnCompile": false,
+      "readOnly": false,
+      "bindable": true,
+      "heritable": true,
+      "propertyName": "Valuechanged",
+      "propertySetterName": "setValuechanged",
+      "propertyGetterName": "getValuechanged",
+      "refTo": ""
+    }
+  ],
+  "virtualRights": [],
+  "$schema": "../Packages/Beckhoff.TwinCAT.HMI.Framework.12.746.3/runtimes/native1.12-tchmi/Schema/UserControlConfig.Schema.json",
+  "description": ""
+}

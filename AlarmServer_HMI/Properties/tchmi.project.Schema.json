@@ -1,4 +1,147 @@
 ﻿{
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "definitions": {}
+  "definitions": {
+    "UserControl1": {
+      "frameworkControlNamespace": "TcHmi.Controls.Beckhoff",
+      "frameworkControlType": "TcHmi.Controls.System.TcHmiUserControl",
+      "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
+      "frameworkUserControlConfig": "AlarmViewer.usercontrol.json",
+      "type": "object",
+      "id": "tchmi:project#/definitions/UserControl1"
+    },
+    "PLC1.Alarms": {
+      "properties": {
+        "bIsAcknowledged": {
+          "$ref": "tchmi:general#/definitions/BOOL"
+        },
+        "bIsActive": {
+          "$ref": "tchmi:general#/definitions/BOOL"
+        },
+        "bIsUsed": {
+          "$ref": "tchmi:general#/definitions/BOOL"
+        },
+        "sAlarmText": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "sName": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "tAcknowlegedTime": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "tActiveStartTime": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "tClearedTime": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "uiID": {
+          "$ref": "tchmi:general#/definitions/UINT"
+        },
+        "uiRepeatCount": {
+          "$ref": "tchmi:general#/definitions/UINT"
+        }
+      },
+      "type": "object"
+    },
+    "PLC1.AlarmServer": {
+      "properties": {
+        "AlarmData": {
+          "$ref": "tchmi:project#/definitions/PLC1.ARRAY (0..2000) OF Alarms"
+        },
+        "nrAlarms": {
+          "$ref": "tchmi:general#/definitions/UINT"
+        }
+      },
+      "type": "object"
+    },
+    "PLC1.ARRAY (0..2000) OF Alarms": {
+      "items": {
+        "$ref": "tchmi:project#/definitions/PLC1.Alarms"
+      },
+      "type": "array",
+      "minItems": 2001,
+      "maxItems": 2001
+    },
+    "AlarmViewer": {
+      "frameworkControlNamespace": "TcHmi.Controls.Beckhoff",
+      "frameworkControlType": "TcHmi.Controls.System.TcHmiUserControl",
+      "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
+      "frameworkUserControlConfig": "AlarmViewer.usercontrol.json",
+      "id": "tchmi:project#/definitions/AlarmViewer",
+      "type": "object"
+    },
+    "FB_AlarmServer": {
+      "properties": {
+        "AlarmData": {
+          "$ref": "tchmi:server#/definitions/PLC1.ARRAY (0..2000) OF Alarms"
+        },
+        "ValueChanged": {
+          "$ref": "tchmi:general#/definitions/INT"
+        },
+        "nrAlarms": {
+          "$ref": "tchmi:general#/definitions/UINT"
+        }
+      },
+      "type": "object",
+      "id": "tchmi:server#/definitions/PLC1.AlarmServer"
+    },
+    "qwerty": {
+      "properties": {
+        "bIsAcknowledged": {
+          "$ref": "tchmi:general#/definitions/BOOL"
+        },
+        "bIsActive": {
+          "$ref": "tchmi:general#/definitions/BOOL"
+        },
+        "bIsUsed": {
+          "$ref": "tchmi:general#/definitions/BOOL"
+        },
+        "sAlarmText": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "sName": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "tAcknowlegedTime": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "tActiveStartTime": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "tClearedTime": {
+          "$ref": "tchmi:general#/definitions/STRING(80)"
+        },
+        "uiID": {
+          "$ref": "tchmi:general#/definitions/UINT"
+        },
+        "uiRepeatCount": {
+          "$ref": "tchmi:general#/definitions/UINT"
+        }
+      },
+      "type": "object"
+    },
+    "AlarmServerData": {
+      "properties": {
+        "AlarmData": {
+          "$ref": "tchmi:project#/definitions/PLC1.ARRAY (0..2000) OF Alarms"
+        },
+        "ValueChanged": {
+          "$ref": "tchmi:general#/definitions/INT"
+        },
+        "nrAlarms": {
+          "$ref": "tchmi:general#/definitions/UINT"
+        }
+      },
+      "type": "object"
+    },
+    "test": {
+      "items": {
+        "$ref": "tchmi:project#/definitions/PLC1.Alarms"
+      },
+      "type": "array",
+      "minItems": 2001,
+      "maxItems": 2001
+    }
+  }
 }

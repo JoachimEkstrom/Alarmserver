@@ -25,7 +25,74 @@
     "DEFAULTTIMEFORMATLOCALE": "client",
     "DEFAULTTIMEZONE": "client",
     "DEFAULTUSERGROUP": "__SystemUsers",
-    "DEFINITIONS": {},
+    "DEFINITIONS": {
+        "PLC1.ARRAY (0..2000) OF Alarms": {
+            "items": {
+                "$ref": "#/definitions/PLC1.Alarms"
+            },
+            "maxItems": 2001,
+            "minItems": 2001,
+            "type": "array"
+        },
+        "PLC1.AlarmServer": {
+            "properties": {
+                "AlarmData": {
+                    "$ref": "#/definitions/PLC1.ARRAY (0..2000) OF Alarms"
+                },
+                "bAckAlarm": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "bAckAllAlarms": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "iValueChanged": {
+                    "$ref": "tchmi:general#/definitions/INT"
+                },
+                "irowSelected": {
+                    "$ref": "tchmi:general#/definitions/INT"
+                },
+                "nrAlarms": {
+                    "$ref": "tchmi:general#/definitions/UINT"
+                }
+            },
+            "type": "object"
+        },
+        "PLC1.Alarms": {
+            "properties": {
+                "bIsAcknowledged": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "bIsActive": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "bIsUsed": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "sAlarmText": {
+                    "$ref": "tchmi:general#/definitions/STRING(80)"
+                },
+                "sName": {
+                    "$ref": "tchmi:general#/definitions/STRING(80)"
+                },
+                "tAcknowlegedTime": {
+                    "$ref": "tchmi:general#/definitions/STRING(80)"
+                },
+                "tActiveStartTime": {
+                    "$ref": "tchmi:general#/definitions/STRING(80)"
+                },
+                "tClearedTime": {
+                    "$ref": "tchmi:general#/definitions/STRING(80)"
+                },
+                "uiID": {
+                    "$ref": "tchmi:general#/definitions/UINT"
+                },
+                "uiRepeatCount": {
+                    "$ref": "tchmi:general#/definitions/UINT"
+                }
+            },
+            "type": "object"
+        }
+    },
     "DEFLATECOMPRESSIONLEVEL": 5,
     "DIAGNOSTICS_DOMAINS": [],
     "DISCOVERY": 2,
@@ -1988,6 +2055,16 @@
             "OPTIONS": {},
             "SCHEMA": {
                 "function": true
+            },
+            "USEMAPPING": true
+        },
+        "PLC1.MAIN.Alarms": {
+            "ACCESS": 3,
+            "CUSTOMERDATA": "",
+            "DOMAIN": "ADS",
+            "MAPPING": "PLC1::MAIN::Alarms",
+            "SCHEMA": {
+                "$ref": "tchmi:server#/definitions/PLC1.AlarmServer"
             },
             "USEMAPPING": true
         },

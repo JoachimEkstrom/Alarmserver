@@ -12,7 +12,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF Berra THEN
+      <ST><![CDATA[Alarms();
+
+IF Berra THEN
 	Berra := FALSE;
 		
 	Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
@@ -32,12 +34,12 @@ END_IF
 
 IF Ack THEN
 	Ack := FALSE;
-	Alarms.AckAlarm(sName:='Bosse');
+	Alarms.AckAlarm(iRow:= 0 );
 END_IF
 
 IF clear THEN
 	clear := FALSE;
-	Alarms.ClearAlarm('Baz');
+	Alarms.ClearAllAlarms();
 END_IF
 
 IF ddd THEN
@@ -48,6 +50,7 @@ IF ddd THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="66" Count="1" />
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="17" Count="3" />
