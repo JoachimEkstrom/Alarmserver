@@ -52,7 +52,6 @@
   "symbols": {
     "internal": {
       "Selectedrow": {
-        "value": "-",
         "type": "tchmi:general#/definitions/String",
         "persist": false,
         "readonly": false

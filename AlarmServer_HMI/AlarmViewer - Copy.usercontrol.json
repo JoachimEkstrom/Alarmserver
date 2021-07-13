@@ -1,19 +1,19 @@
 ﻿{
   "parameters": [
     {
-      "name": "data-tchmi-alarmdata",
-      "displayName": "AlarmData",
+      "name": "data-tchmi-alarmserverdata",
+      "displayName": "AlarmServerData",
       "visible": true,
-      "type": "tchmi:project#/definitions/PLC1.AlarmServer",
+      "type": "tchmi:project#/definitions/PLC1.Alarms",
       "category": "",
       "description": "",
       "requiredOnCompile": false,
       "readOnly": false,
       "bindable": true,
       "heritable": true,
-      "propertyName": "AlarmData",
-      "propertySetterName": "setAlarmData",
-      "propertyGetterName": "getAlarmData",
+      "propertyName": "AlarmServerData",
+      "propertySetterName": "setAlarmServerData",
+      "propertyGetterName": "getAlarmServerData",
       "refTo": ""
     }
   ],

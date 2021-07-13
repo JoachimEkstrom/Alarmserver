@@ -45,6 +45,9 @@
                 "bAckAllAlarms": {
                     "$ref": "tchmi:general#/definitions/BOOL"
                 },
+                "bClearAllAlarms": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
                 "iValueChanged": {
                     "$ref": "tchmi:general#/definitions/INT"
                 },
