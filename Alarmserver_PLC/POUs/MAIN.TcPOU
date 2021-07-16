@@ -9,18 +9,31 @@ VAR
 	Ack: BOOL;
 	clear: BOOL;
 	ddd: BOOL;
+	
+	startTime			: ULINT;
+	stopTime			: ULINT;
+	diffTime			: ULINT;
+	i :INT;	
+	AckAll: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[Alarms();
 
 IF Berra THEN
+	startTime:= F_GetActualDcTime64();
 	Berra := FALSE;
 		
-	Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
-	Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
-	Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
-	Alarms.NewAlarm(sName:='Bosse', sAlarmText:= 'Bazinga');
+	FOR i:=0 TO 999 DO 
+		Alarms.NewAlarm(sName:=INT_TO_STRING(i), sAlarmText:= 'Ett nytt larm');
+	END_FOR
+	//Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
+	//Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
+	//Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
+	//Alarms.NewAlarm(sName:='Bosse', sAlarmText:= 'Bazinga');
+	
+	stopTime:= F_GetActualDcTime64();
+	diffTime := (stopTime - startTime);
 END_IF
 IF Baz THEN
 	Baz := FALSE;
@@ -33,8 +46,19 @@ END_IF
 
 
 IF Ack THEN
+			startTime:= F_GetActualDcTime64();
 	Ack := FALSE;
-	Alarms.AckAlarm(iRow:= 0 );
+	Alarms.AckAlarm(iRow:= 900 );
+			stopTime:= F_GetActualDcTime64();
+	diffTime := (stopTime - startTime);
+END_IF
+
+IF AckAll THEN
+		startTime:= F_GetActualDcTime64();
+	AckAll := FALSE;
+	Alarms.AckAllAlarms();
+		stopTime:= F_GetActualDcTime64();
+	diffTime := (stopTime - startTime);
 END_IF
 
 IF clear THEN
@@ -52,17 +76,31 @@ END_IF]]></ST>
     <LineIds Name="MAIN">
       <LineId Id="66" Count="1" />
       <LineId Id="11" Count="0" />
+      <LineId Id="81" Count="0" />
       <LineId Id="13" Count="0" />
-      <LineId Id="17" Count="3" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="18" Count="2" />
       <LineId Id="16" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="83" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="31" Count="6" />
       <LineId Id="2" Count="0" />
       <LineId Id="40" Count="1" />
       <LineId Id="39" Count="0" />
+      <LineId Id="105" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="45" Count="0" />
+      <LineId Id="106" Count="1" />
       <LineId Id="43" Count="0" />
+      <LineId Id="96" Count="1" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="98" Count="1" />
+      <LineId Id="103" Count="1" />
+      <LineId Id="95" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="46" Count="0" />
       <LineId Id="52" Count="0" />
