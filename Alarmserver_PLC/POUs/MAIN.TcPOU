@@ -24,7 +24,7 @@ IF Berra THEN
 	startTime:= F_GetActualDcTime64();
 	Berra := FALSE;
 		
-	FOR i:=0 TO 999 DO 
+	FOR i:=0 TO 100 DO 
 		Alarms.NewAlarm(sName:=INT_TO_STRING(i), sAlarmText:= 'Ett nytt larm');
 	END_FOR
 	//Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');

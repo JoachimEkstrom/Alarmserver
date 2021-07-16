@@ -211,6 +211,14 @@
                     isSelected = x.rowIndex - 1
                    //x.style.backgroundColor = "pink";
                     updateAlarmList(alarms);
+                    var rows = document.querySelectorAll('#mytable tr');
+
+                    // line is zero-based
+                    // line is the row number that you want to see into view after scroll    
+                    rows[isSelected].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
                 } else {
                     // Handle error... 
                     console.log("NOTOK")
@@ -226,16 +234,23 @@
             border-collapse: collapse;
             table-layout: auto;
             border-spacing: 0;
+            
         }
-        thead, tbody {
+        thead {
             display: block;
             float: left;
+            position: sticky;
+            top: 0px;
+            z-index: 100;
+            background-color: #ffffff;
         }
 
         tbody {
             height: 750px; /* Just for the demo          */
             overflow-y: scroll; /* Trigger vertical scroll    */
             overflow-x: hidden; /* Hide the horizontal scroll */
+            display: block;
+            float: left;
         }
 
         th {
@@ -245,6 +260,8 @@
             vertical-align: central;
             font-size: 16px;
             padding: 0;
+            position: sticky;
+            top: 0px;
         }
 
         td {
