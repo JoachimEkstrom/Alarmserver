@@ -20,7 +20,7 @@
         "objectType": "JavaScript",
         "active": true,
         "sourceLines": [
-          "updateAlarmList();\nconsole.log(\"Value changed, updating the alarm log\");"
+          "getData();\nconsole.log(\"Value changed, updating the alarm log\");"
         ],
         "injectContextObject": false,
         "asyncWait": true,
@@ -117,90 +117,100 @@
         </table>
     </div>
     <script>
-
-        function updateAlarmList() { 
-            console.log("Updating alarm list")
+        let alarms = []
+        let isSelected
+        let isSelectedOld
+        function getData() {
             TcHmi.Symbol.readEx2('%pp%AlarmData::AlarmData%/pp%', function (data) {
                 if (data.error === TcHmi.Errors.NONE) {
                     // Handle result value... 
                     //console.log(data.value)
-                    var alarms = data.value;
-                    let table = document.getElementById('mytable')
-                    let oldTbody = document.getElementById('tbody') 
-                    table.removeChild(oldTbody) // Remove old alarms
-                    let newTbody = document.createElement('tbody')
-                    newTbody.id = 'tbody'
-                    table.appendChild(newTbody);
-
-
-                    for (let i = 0; i < alarms.length; i++) {
-                        if (alarms[i].bIsUsed) {
-                            let tr = document.createElement('tr')
-                            tr.addEventListener('click', function () { selectRow(this) });
-
-                            let sName = document.createElement('td')
-                            sName.innerHTML = alarms[i].sName;
-                            sName.className = "sName";
-                            tr.appendChild(sName)
-
-                            let isActive = document.createElement('td')
-                            isActive.innerHTML = alarms[i].bIsActive;
-                            isActive.className = "isActive";
-                            tr.appendChild(isActive)
-
-                            let isAck = document.createElement('td')
-                            isAck.innerHTML = alarms[i].bIsAcknowledged;
-                            isAck.className = "isAck";
-                            tr.appendChild(isAck)
-
-                            let sAlarmText = document.createElement('td')
-                            sAlarmText.innerHTML = alarms[i].sAlarmText;
-                            sAlarmText.className = "sAlarmText";
-                            tr.appendChild(sAlarmText)
-
-                            let tActiveStartTime = document.createElement('td')
-                            tActiveStartTime.innerHTML = alarms[i].tActiveStartTime.slice(0, 19);
-                            tActiveStartTime.className = "tActiveStartTime";
-                            tr.appendChild(tActiveStartTime)
-
-                            let tAcknowlegedTime = document.createElement('td')
-                            tAcknowlegedTime.innerHTML = alarms[i].tAcknowlegedTime.slice(0, 19);
-                            tAcknowlegedTime.className = "tAcknowlegedTime";
-                            tr.appendChild(tAcknowlegedTime)
-
-                            let uiRepeatCount = document.createElement('td')
-                            uiRepeatCount.innerHTML = alarms[i].uiRepeatCount;
-                            uiRepeatCount.className = "uiRepeatCount";
-                            tr.appendChild(uiRepeatCount)
-
-                            if (alarms[i].bIsActive && !alarms[i].bIsAcknowledged) {
-                                tr.style.backgroundColor = "red";
-                            }
-                            
-
-                            let tbody = document.getElementById('tbody');
-                            tbody.appendChild(tr)
-                        }
-
-                    }
-
-
-                } else {
-                    console.log("Could not read the alarmserver array data =(")
+                    alarms = data.value;
+                    updateAlarmList(alarms);
                 }
-            });
+
+            })
+        }
+
+        function updateAlarmList(alarms) { 
+            console.log("Updating alarm list")
+
+           
+            let table = document.getElementById('mytable')
+            let oldTbody = document.getElementById('tbody') 
+            table.removeChild(oldTbody) // Remove old alarms
+            let newTbody = document.createElement('tbody')
+            newTbody.id = 'tbody'
+            table.appendChild(newTbody);
 
 
+            for (let i = 0; i < alarms.length; i++) {
+                if (alarms[i].bIsUsed) {
+                    let tr = document.createElement('tr')
+                    tr.addEventListener('click', function () { selectRow(this) });
+
+                    let sName = document.createElement('td')
+                    sName.innerHTML = alarms[i].sName;
+                    sName.className = "sName";
+                    tr.appendChild(sName)
+
+                    let isActive = document.createElement('td')
+                    isActive.innerHTML = alarms[i].bIsActive;
+                    isActive.className = "isActive";
+                    tr.appendChild(isActive)
+
+                    let isAck = document.createElement('td')
+                    isAck.innerHTML = alarms[i].bIsAcknowledged;
+                    isAck.className = "isAck";
+                    tr.appendChild(isAck)
+
+                    let sAlarmText = document.createElement('td')
+                    sAlarmText.innerHTML = alarms[i].sAlarmText;
+                    sAlarmText.className = "sAlarmText";
+                    tr.appendChild(sAlarmText)
+
+                    let tActiveStartTime = document.createElement('td')
+                    tActiveStartTime.innerHTML = alarms[i].tActiveStartTime.slice(0, 19);
+                    tActiveStartTime.className = "tActiveStartTime";
+                    tr.appendChild(tActiveStartTime)
+
+                    let tAcknowlegedTime = document.createElement('td')
+                    tAcknowlegedTime.innerHTML = alarms[i].tAcknowlegedTime.slice(0, 19);
+                    tAcknowlegedTime.className = "tAcknowlegedTime";
+                    tr.appendChild(tAcknowlegedTime)
+
+                    let uiRepeatCount = document.createElement('td')
+                    uiRepeatCount.innerHTML = alarms[i].uiRepeatCount;
+                    uiRepeatCount.className = "uiRepeatCount";
+                    tr.appendChild(uiRepeatCount)
+
+                    if (alarms[i].bIsActive && !alarms[i].bIsAcknowledged) {
+                        tr.style.backgroundColor = "red";
+                    } else if (alarms[i].bIsActive && alarms[i].bIsAcknowledged) {
+                        tr.style.backgroundColor = "yellow";
+                    }
+                    if (i === isSelected && isSelectedOld !== isSelected) {
+                        tr.style.backgroundColor = "pink";
+                        isSelectedOld = isSelected
+                    }
+                            
+                    let tbody = document.getElementById('tbody');
+                    tbody.appendChild(tr)
+                }
+
+            }
         }
 
 
         function selectRow(x) {
-           console.log(x);
+            //console.log(x);
             TcHmi.Symbol.writeEx('%pp%AlarmData::irowSelected%/pp%', x.rowIndex - 1, function (data) {
                 if (data.error === TcHmi.Errors.NONE) {
                     // Handle success... 
                     console.log("OK")
-
+                    isSelected = x.rowIndex - 1
+                   //x.style.backgroundColor = "pink";
+                    updateAlarmList(alarms);
                 } else {
                     // Handle error... 
                     console.log("NOTOK")
@@ -208,7 +218,6 @@
             });
         }
 
-        updateAlarmList();
     </script>
     <style>
         table {
