@@ -5,18 +5,25 @@
 VAR CONSTANT
 	nrAlarms 			: UINT := 2000;
 	ColumnNames     	: ARRAY[0..4] OF STRING(50); // Must be set to 50 char!
-	sTable 				: STRING := '"public"."datatypes"'; // Important to have extra " " around both DBname and table name.
+	sTable 				: STRING:= '"public"."datatypes"'; // Important to have extra " " around both DBname and table name.
+	DBID				: UINT	:=1;
+	
+	//For read Method
+	OrderByColumn		: UINT	:=1; 
+	StartIndex			: UINT	:=0;
+	NrOfRows			: UINT	:=10;
 END_VAR
 VAR PERSISTENT
-		AlarmData: ARRAY [0..nrAlarms] OF Alarms;
-		iValueChanged : INT;
-		irowSelected: INT;
-		bAckAlarm : BOOL;
-		bAckAllAlarms : BOOL;
-		bClearAllAlarms : BOOL;
+	AlarmData			: ARRAY [0..nrAlarms] OF Alarms;
+	iValueChanged 		: INT;
+	irowSelected		: INT;
+	bAckAlarm 			: BOOL;
+	bAckAllAlarms 		: BOOL;
+	bClearAllAlarms 	: BOOL;
 END_VAR
 VAR
-	init : BOOL:= TRUE;
+	init 				: BOOL:= TRUE;
+	dataReturned 		: ARRAY[0..9] OF Alarms; // Array of the numbers of rows you want to store. 
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// First run, init stuff needed to work
@@ -116,7 +123,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[// Write one record to Database 
 // Call Functionblock
 IF fbPLCDBWrite.WriteStruct(
-	hDBID:= 1, 
+	hDBID:= DBID, 
 	sTableName:= sTable, 
 	pRecord:= ADR(Alarm), 
 	cbRecord:= SIZEOF(Alarm), 
@@ -213,6 +220,38 @@ iValueChanged:= iValueChanged +1;
 //AddToDb(Alarm);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="ReadFromDB" Id="{7e1f915b-3b34-44c6-a7c3-63f4fb4fd38f}">
+      <Declaration><![CDATA[METHOD PUBLIC ReadFromDB : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	fbPLCDBRead    		: FB_PLCDBReadEvt (sNetID := '', tTimeout := T#5S);
+    tcMessage	     	: I_TcMessage;
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//	Read rows from the db.  	 
+IF fbPLCDBRead.ReadStruct(
+	hDBID:= DBID, 
+	sTableName:= sTable, 
+	pColumnNames:= ADR(ColumnNames), 
+	cbColumnNames:= SIZEOF(ColumnNames), 
+	sOrderByColumn:= ColumnNames[OrderByColumn], 
+	eOrderType:= E_OrderType.ASC, 
+	nStartIndex:= StartIndex, 
+	nRecordCount:= NrOfRows, 
+	pData:= ADR(dataReturned), 
+	cbData:= SIZEOF(dataReturned))
+THEN
+
+	IF fbPLCDBRead.bError THEN
+		tcMessage:= fbPLCDBRead.ipTcResult;
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="AlarmServer">
       <LineId Id="115" Count="0" />
       <LineId Id="107" Count="0" />
@@ -302,6 +341,12 @@ iValueChanged:= iValueChanged +1;
       <LineId Id="97" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="63" Count="0" />
+    </LineIds>
+    <LineIds Name="AlarmServer.ReadFromDB">
+      <LineId Id="13" Count="0" />
+      <LineId Id="17" Count="14" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
