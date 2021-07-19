@@ -4,14 +4,17 @@
     <Declaration><![CDATA[FUNCTION_BLOCK AlarmServer
 VAR CONSTANT
 	nrAlarms 			: UINT := 2000;
-	ColumnNames     	: ARRAY[0..4] OF STRING(50); // Must be set to 50 char!
 	sTable 				: STRING:= '"public"."datatypes"'; // Important to have extra " " around both DBname and table name.
 	DBID				: UINT	:=1;
 	
 	//For read Method
 	OrderByColumn		: UINT	:=1; 
 	StartIndex			: UINT	:=0;
-	NrOfRows			: UINT	:=10;
+END_VAR
+VAR
+	init 				: BOOL:= TRUE;
+	ColumnNames     	: ARRAY[0..4] OF STRING(50); // Must be set to 50 char!
+	dataReturned 		: ARRAY[0..9] OF Alarms; // Array of the numbers of rows you want to store. 
 END_VAR
 VAR PERSISTENT
 	AlarmData			: ARRAY [0..nrAlarms] OF Alarms;
@@ -20,10 +23,6 @@ VAR PERSISTENT
 	bAckAlarm 			: BOOL;
 	bAckAllAlarms 		: BOOL;
 	bClearAllAlarms 	: BOOL;
-END_VAR
-VAR
-	init 				: BOOL:= TRUE;
-	dataReturned 		: ARRAY[0..9] OF Alarms; // Array of the numbers of rows you want to store. 
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// First run, init stuff needed to work
@@ -223,6 +222,7 @@ iValueChanged:= iValueChanged +1;
     <Method Name="ReadFromDB" Id="{7e1f915b-3b34-44c6-a7c3-63f4fb4fd38f}">
       <Declaration><![CDATA[METHOD PUBLIC ReadFromDB : BOOL
 VAR_INPUT
+	NrOfRows 			: UINT:=10;
 END_VAR
 VAR
 	fbPLCDBRead    		: FB_PLCDBReadEvt (sNetID := '', tTimeout := T#5S);

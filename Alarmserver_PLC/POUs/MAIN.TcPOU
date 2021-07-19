@@ -15,6 +15,7 @@ VAR
 	diffTime			: ULINT;
 	i :INT;	
 	AckAll: BOOL;
+	READ: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -27,10 +28,6 @@ IF Berra THEN
 	FOR i:=0 TO 100 DO 
 		Alarms.NewAlarm(sName:=INT_TO_STRING(i), sAlarmText:= 'Ett nytt larm');
 	END_FOR
-	//Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
-	//Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
-	//Alarms.NewAlarm(sName:='Berra', sAlarmText:= 'Ett nytt larm');
-	//Alarms.NewAlarm(sName:='Bosse', sAlarmText:= 'Bazinga');
 	
 	stopTime:= F_GetActualDcTime64();
 	diffTime := (stopTime - startTime);
@@ -71,6 +68,14 @@ IF ddd THEN
 		
 	Alarms.NewAlarm(sName:='Braf', sAlarmText:= 'Ett nytt larm');
 	Alarms.NewAlarm(sName:='Gizmo', sAlarmText:= 'Ett nytt larm');
+END_IF
+
+IF READ THEN
+	startTime:= F_GetActualDcTime64();
+	READ := FALSE;
+	Alarms.ReadFromDB(NrOfRows:= 10);
+	stopTime:= F_GetActualDcTime64();
+	diffTime := (stopTime - startTime);
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
@@ -81,8 +86,6 @@ END_IF]]></ST>
       <LineId Id="17" Count="0" />
       <LineId Id="91" Count="0" />
       <LineId Id="93" Count="1" />
-      <LineId Id="18" Count="2" />
-      <LineId Id="16" Count="0" />
       <LineId Id="82" Count="0" />
       <LineId Id="84" Count="0" />
       <LineId Id="83" Count="0" />
@@ -107,6 +110,8 @@ END_IF]]></ST>
       <LineId Id="48" Count="1" />
       <LineId Id="54" Count="5" />
       <LineId Id="53" Count="0" />
+      <LineId Id="124" Count="6" />
+      <LineId Id="123" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
