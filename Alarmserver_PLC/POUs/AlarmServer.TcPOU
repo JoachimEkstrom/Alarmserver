@@ -3,7 +3,9 @@
   <POU Name="AlarmServer" Id="{3d2cc0da-a4c3-43eb-906a-300187b5ba2d}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK AlarmServer
 VAR CONSTANT
-	nrAlarms : UINT := 2000;
+	nrAlarms 			: UINT := 2000;
+	ColumnNames     	: ARRAY[0..4] OF STRING(50); // Must be set to 50 char!
+	sTable 				: STRING := '"public"."datatypes"'; // Important to have extra " " around both DBname and table name.
 END_VAR
 VAR PERSISTENT
 		AlarmData: ARRAY [0..nrAlarms] OF Alarms;
@@ -13,10 +15,24 @@ VAR PERSISTENT
 		bAckAllAlarms : BOOL;
 		bClearAllAlarms : BOOL;
 END_VAR
-
-]]></Declaration>
+VAR
+	init : BOOL:= TRUE;
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
+      <ST><![CDATA[// First run, init stuff needed to work
+IF init THEN
+	// Set columnnames -- Must be the same as in DB
+	ColumnNames[0] := '_name';
+	ColumnNames[1] := '_dint';
+	ColumnNames[2] := '_real';
+	ColumnNames[3] := '_lreal';
+	ColumnNames[4] := '_date';
+	
+	init:= FALSE;
+END_IF
+
+
+
 IF(bAckAlarm) THEN
 	bAckAlarm:= FALSE;
 	AckAlarm(iRow:= irowSelected);
@@ -55,7 +71,7 @@ AlarmData[iRow].tAcknowlegedTime :=  sAct;
 // Update variable for valuechange event
 iValueChanged:= iValueChanged +1;
 // Always add to DB
-AddToDb(AlarmData[i]);]]></ST>
+//AddToDb(AlarmData[i]);]]></ST>
       </Implementation>
     </Method>
     <Method Name="AckAllAlarms" Id="{d37e7b81-01f0-40d0-83bf-50bc651716c7}">
@@ -90,11 +106,28 @@ iValueChanged:= iValueChanged +1;
     <Method Name="AddToDb" Id="{bacaf7d5-fbb6-464d-b066-8afef850f3b6}">
       <Declaration><![CDATA[METHOD PUBLIC AddToDb : BOOL
 VAR_INPUT
-		Alarm: Alarms;
+	Alarm: Alarms;
 END_VAR
-]]></Declaration>
+VAR
+	fbPLCDBWrite    	: FB_PLCDBWriteEvt(sNetID := '', tTimeout := T#5S);
+	tcMessage       	: I_TcMessage;	
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[// Write one record to Database 
+// Call Functionblock
+IF fbPLCDBWrite.WriteStruct(
+	hDBID:= 1, 
+	sTableName:= sTable, 
+	pRecord:= ADR(Alarm), 
+	cbRecord:= SIZEOF(Alarm), 
+	pColumnNames:= ADR(ColumnNames) , 
+	cbColumnNames:= SIZEOF(ColumnNames))
+THEN
+	IF fbPLCDBWrite.bError THEN
+		tcMessage := fbPLCDBWrite.ipTcResult;
+	END_IF
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="ClearAllAlarms" Id="{1ecd57a5-9500-4f9c-86c4-237a9ec07bd0}">
@@ -177,10 +210,18 @@ END_IF
 // Update variable for valuechange event
 iValueChanged:= iValueChanged +1;
 // Always add to DB
-AddToDb(Alarm);]]></ST>
+//AddToDb(Alarm);]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="AlarmServer">
+      <LineId Id="115" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="110" Count="4" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="116" Count="1" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="98" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="43" Count="0" />
@@ -216,6 +257,9 @@ AddToDb(Alarm);]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="AlarmServer.AddToDb">
+      <LineId Id="27" Count="0" />
+      <LineId Id="30" Count="10" />
+      <LineId Id="50" Count="1" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="AlarmServer.ClearAllAlarms">
