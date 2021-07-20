@@ -249,7 +249,7 @@ THEN
 		tcMessage:= fbPLCDBRead.ipTcResult;
 	END_IF
 END_IF
-]]></ST>
+//]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="AlarmServer">
