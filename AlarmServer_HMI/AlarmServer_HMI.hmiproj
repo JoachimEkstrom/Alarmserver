@@ -23,8 +23,8 @@
     <EnableTypeScript>true</EnableTypeScript>
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
     <Name>AlarmServer_HMI</Name>
-    <HmiCommunicationRouterPort>10110</HmiCommunicationRouterPort>
-    <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
+    <HmiCommunicationRouterPort>10111</HmiCommunicationRouterPort>
+    <HmiCommunicationServerAuthPort>13001</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.746.3</HmiInitial>
     <HmiRecent>1.12.746.3</HmiRecent>
     <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
