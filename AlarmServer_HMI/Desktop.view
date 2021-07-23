@@ -7,4 +7,8 @@
 
 </div>
 
+<div id="TcHmiCheckbox" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="387" data-tchmi-left-unit="px" data-tchmi-text="Checkbox" data-tchmi-top="30" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px">
+
+</div>
+
 </div>
