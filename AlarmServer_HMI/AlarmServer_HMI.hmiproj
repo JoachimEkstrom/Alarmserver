@@ -24,7 +24,7 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
     <Name>AlarmServer_HMI</Name>
     <HmiCommunicationRouterPort>10108</HmiCommunicationRouterPort>
-    <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
+    <HmiCommunicationServerAuthPort>13001</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.746.3</HmiInitial>
     <HmiRecent>1.12.746.3</HmiRecent>
     <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
