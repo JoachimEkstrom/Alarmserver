@@ -3283,11 +3283,11 @@
     "USERSELECTTYPE": 0,
     "VIDEOSEGMENTSIZE": 1048576,
     "VIRTUALDIRECTORIES": {
-        "/": "C:\\Users\\joachim.ekstrom\\source\\repos\\Alarmserver\\AlarmServer_HMI",
-        "/Beckhoff.TwinCAT.HMI.Controls": "C:\\Users\\joachim.ekstrom\\source\\repos\\Alarmserver\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.746.3\\runtimes\\native1.12-tchmi",
-        "/Beckhoff.TwinCAT.HMI.Functions": "C:\\Users\\joachim.ekstrom\\source\\repos\\Alarmserver\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.746.3\\runtimes\\native1.12-tchmi",
-        "/bin": "C:\\Users\\joachim.ekstrom\\source\\repos\\Alarmserver\\AlarmServer_HMI\\bin\\",
-        "/bin/framework": "C:\\Users\\joachim.ekstrom\\source\\repos\\Alarmserver\\AlarmServer_HMI\\bin\\framework",
-        "/framework": "C:\\Users\\joachim.ekstrom\\source\\repos\\Alarmserver\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.746.3\\runtimes\\native1.12-tchmi"
+        "/": "C:\\Users\\meet.sheth\\Source\\Repos\\Alarmserver\\AlarmServer_HMI",
+        "/Beckhoff.TwinCAT.HMI.Controls": "C:\\Users\\meet.sheth\\Source\\Repos\\Alarmserver\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.746.3\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.Functions": "C:\\Users\\meet.sheth\\Source\\Repos\\Alarmserver\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.746.3\\runtimes\\native1.12-tchmi",
+        "/bin": "C:\\Users\\meet.sheth\\Source\\Repos\\Alarmserver\\AlarmServer_HMI\\bin\\",
+        "/bin/framework": "C:\\Users\\meet.sheth\\Source\\Repos\\Alarmserver\\AlarmServer_HMI\\bin\\framework",
+        "/framework": "C:\\Users\\meet.sheth\\Source\\Repos\\Alarmserver\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.746.3\\runtimes\\native1.12-tchmi"
     }
 }
