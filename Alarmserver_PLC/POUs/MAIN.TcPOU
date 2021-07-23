@@ -16,6 +16,7 @@ VAR
 	i :INT;	
 	AckAll: BOOL;
 	READ: BOOL;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -25,7 +26,7 @@ IF Berra THEN
 	startTime:= F_GetActualDcTime64();
 	Berra := FALSE;
 		
-	FOR i:=0 TO 100 DO 
+	FOR i:=0 TO 5 DO 
 		Alarms.NewAlarm(sName:=INT_TO_STRING(i), sAlarmText:= 'Ett nytt larm');
 	END_FOR
 	
@@ -43,18 +44,18 @@ END_IF
 
 
 IF Ack THEN
-			startTime:= F_GetActualDcTime64();
+	startTime:= F_GetActualDcTime64();
 	Ack := FALSE;
 	Alarms.AckAlarm(iRow:= 900 );
-			stopTime:= F_GetActualDcTime64();
+	stopTime:= F_GetActualDcTime64();
 	diffTime := (stopTime - startTime);
 END_IF
 
 IF AckAll THEN
-		startTime:= F_GetActualDcTime64();
+	startTime:= F_GetActualDcTime64();
 	AckAll := FALSE;
 	Alarms.AckAllAlarms();
-		stopTime:= F_GetActualDcTime64();
+	stopTime:= F_GetActualDcTime64();
 	diffTime := (stopTime - startTime);
 END_IF
 

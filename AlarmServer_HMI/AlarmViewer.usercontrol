@@ -32,7 +32,7 @@
 </script>
 </div>
 
-<div id="TcHmiButton_4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="505" data-tchmi-left-unit="px" data-tchmi-text="Ack" data-tchmi-top="830" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+<div id="TcHmiButton_4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="506" data-tchmi-left-unit="px" data-tchmi-text="Ack" data-tchmi-top="830" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
 
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
@@ -118,6 +118,7 @@
     </div>
     <script>
         let alarms = []
+        let dbalarms = Array(2000)
         let isSelected
         let isSelectedOld
         function getData() {
@@ -126,10 +127,73 @@
                     // Handle result value... 
                     //console.log(data.value)
                     alarms = data.value;
+                    writeDb();
                     updateAlarmList(alarms);
                 }
 
             })
+        }
+
+        async function writeDb() {
+            let i = 0;
+            let update = false
+            let dbArr = []
+            let t0 = performance.now();
+            //for (let i = 0; i < alarms.length; i++) {
+            for (const alarm of alarms) {
+                if ((JSON.stringify(alarm) !== JSON.stringify(dbalarms[i])) && alarm.bIsUsed) {
+                    console.log("Found stuff for DB")
+                    dbArr.push(alarm)
+                    if (alarm.tClearedTime !== "") {
+                        alarm.bIsUsed = false
+                        alarm.sName = ""
+                        alarm.bIsActive = 0
+                        alarm.bIsAcknowledged = 0
+                        alarm.sAlarmText = ""
+                        alarm.tActiveStartTime = ""
+                        alarm.tAcknowlegedTime = ""
+                        alarm.tClearedTime = ""
+                        alarm.uiRepeatCount = 0
+                        if (!update) {
+                            update = true
+                        }
+                    }
+                    
+                }
+                // A http request body cannot be to large, if more than 250 event send these as a first chunk. 
+                if (dbArr.length > 250) {
+                    await postData('http://127.0.0.1:4000/addrows', dbArr/*{ sName: alarm.sName, bIsActive: alarm.bIsActive, bIsAcknowledged: alarm.bIsAcknowledged, sAlarmText: alarm.sAlarmText, tActiveStartTime: alarm.tActiveStartTime, tAcknowlegedTime: alarm.tAcknowlegedTime, tClearedTime: alarm.tClearedTime, uiRepeatCount: alarm.uiRepeatCount }*/)
+                        .then(data => {
+                            dbArr = []
+                        })
+                }
+                i++
+            }
+
+            await postData('http://127.0.0.1:4000/addrows', dbArr/*{ sName: alarm.sName, bIsActive: alarm.bIsActive, bIsAcknowledged: alarm.bIsAcknowledged, sAlarmText: alarm.sAlarmText, tActiveStartTime: alarm.tActiveStartTime, tAcknowlegedTime: alarm.tAcknowlegedTime, tClearedTime: alarm.tClearedTime, uiRepeatCount: alarm.uiRepeatCount }*/)
+                .then(data => {
+                    //console.log(data);
+                })
+
+            dbalarms = alarms
+
+            let t1 = performance.now();
+            console.log(`Update Database took ${t1 - t0} milliseconds.`);
+
+            if (update) {
+                TcHmi.Symbol.writeEx('%pp%AlarmData::AlarmData%/pp%', alarms, function (data) {
+                    if (data.error === TcHmi.Errors.NONE) {
+                        // Handle success... 
+                        console.log("OK")
+                    } else {
+                        // Handle error... 
+                        console.log("NOTOK")
+                    }
+                });
+
+
+                updateAlarmList(alarms);
+            }
         }
 
         function updateAlarmList(alarms) {
@@ -201,7 +265,7 @@
 
             }
             let t1 = performance.now();
-            console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+            console.log(`Update AlarmTable took ${t1 - t0} milliseconds.`);
         }
 
 
@@ -228,6 +292,28 @@
                 }
             });
         }
+
+        // Example POST method implementation:
+        async function postData(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            //return response.json(); // parses JSON response into native JavaScript objects
+            return response.status
+        }
+
+
 
     </script>
     <style>
@@ -317,6 +403,55 @@
         "objectType": "WriteToSymbol",
         "active": true,
         "symbolExpression": "%pp%AlarmData::bClearAllAlarms%/pp%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": true
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiButton_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="905" data-tchmi-left-unit="px" data-tchmi-text="Write to db" data-tchmi-top="830" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiButton_7.onPressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "// Example POST method implementation:\nasync function postData(url = '', data = {}) {\n  // Default options are marked with *\n  const response = await fetch(url, {\n    method: 'POST', // *GET, POST, PUT, DELETE, etc.\n    mode: 'cors', // no-cors, *cors, same-origin\n    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached\n    credentials: 'same-origin', // include, *same-origin, omit\n    headers: {\n      'Content-Type': 'application/json'\n      // 'Content-Type': 'application/x-www-form-urlencoded',\n    },\n    redirect: 'follow', // manual, *follow, error\n    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url\n    body: JSON.stringify(data) // body data type must match \"Content-Type\" header\n  });\n  //return response.json(); // parses JSON response into native JavaScript objects\n  return response.status\n}\n\n// testing to write to SQLite3\nlet q = 20\nfor(let i = 0; i < q; i++){\t\n\tpostData('http://127.0.0.1:4000/addrow', { sName: \"Berra\", bIsActive: 1, bIsAcknowledged: 0, sAlarmText: \"Nytt larm\", tActiveStartTime: \"2021-04-31\", tAcknowlegedTime: \"3134-67-3\",  tClearedTime: \"432-45-654\", uiRepeatCount : 43 })\n  \t\t.then(data => {\n    \t\tconsole.log(data); // JSON data parsed by `data.json()` call\n  \t\t});\n\n}\n"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiButton_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="125" data-tchmi-left-unit="px" data-tchmi-text="Generate Alarms" data-tchmi-top="825" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiButton_8.onPressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%PLC1.MAIN.Berra%/s%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",

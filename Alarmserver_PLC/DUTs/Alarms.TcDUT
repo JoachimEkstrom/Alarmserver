@@ -5,14 +5,14 @@
 STRUCT
 	bIsUsed				: BOOL;
 	sName				: STRING; 
-	bIsActive			: BOOL;
-	bIsAcknowledged		: BOOL;
+	bIsActive			: INT;
+	bIsAcknowledged		: INT;
 	uiID				: UINT;
 	sAlarmText			: STRING;
 	tActiveStartTime	: STRING;
 	tAcknowlegedTime	: STRING;
 	tClearedTime		: STRING;
-	uiRepeatCount		: UINT;
+	uiRepeatCount		: DINT;
 	
 END_STRUCT
 END_TYPE

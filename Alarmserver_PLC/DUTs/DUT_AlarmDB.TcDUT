@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="DUT_AlarmDB" Id="{7251f434-bbe9-471a-940e-49988802f32c}">
+    <Declaration><![CDATA[TYPE DUT_AlarmDB :
+STRUCT
+	sname: STRING(255);
+	tactivestarttime: STRING(255);
+	tacktime: STRING(255);
+	tclearedtime: STRING(255);
+	uirepeatcount: LINT;
+	salarmtext: STRING(255);
+	bisactive: LINT;
+	bisacknowledged: lINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

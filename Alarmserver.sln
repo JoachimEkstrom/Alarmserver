@@ -7,6 +7,8 @@ Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "Alarmserver", "Alarmserver.
 EndProject
 Project("{FE7A1B72-C5B7-4D7C-BB7D-76384D4DE8E1}") = "AlarmServer_HMI", "AlarmServer_HMI\AlarmServer_HMI.hmiproj", "{0535C9F4-19EA-4B2A-845F-AB15945C648A}"
 EndProject
+Project("{BACAAE27-5D5D-4513-97FF-0FED82FEF961}") = "AlarmServer_Db", "Alarmserver_Database_Server\AlarmServer_Db\AlarmServer_Db.tcconnproj", "{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|TwinCAT CE7 (ARMV7) = Debug|TwinCAT CE7 (ARMV7)
@@ -51,6 +53,16 @@ Global
 		{0535C9F4-19EA-4B2A-845F-AB15945C648A}.Release|TwinCAT OS (ARMT2).ActiveCfg = Release|TwinCAT HMI
 		{0535C9F4-19EA-4B2A-845F-AB15945C648A}.Release|TwinCAT RT (x64).ActiveCfg = Release|TwinCAT HMI
 		{0535C9F4-19EA-4B2A-845F-AB15945C648A}.Release|TwinCAT RT (x86).ActiveCfg = Release|TwinCAT HMI
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Debug|TwinCAT CE7 (ARMV7).ActiveCfg = Debug|TwinCAT CE7 (ARMV7)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Debug|TwinCAT HMI.ActiveCfg = Debug|TwinCAT RT (x86)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Debug|TwinCAT OS (ARMT2).ActiveCfg = Debug|TwinCAT OS (ARMT2)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Debug|TwinCAT RT (x64).ActiveCfg = Debug|TwinCAT RT (x64)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Debug|TwinCAT RT (x86).ActiveCfg = Debug|TwinCAT RT (x86)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Release|TwinCAT CE7 (ARMV7).ActiveCfg = Release|TwinCAT CE7 (ARMV7)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Release|TwinCAT HMI.ActiveCfg = Release|TwinCAT RT (x86)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Release|TwinCAT OS (ARMT2).ActiveCfg = Release|TwinCAT OS (ARMT2)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Release|TwinCAT RT (x64).ActiveCfg = Release|TwinCAT RT (x64)
+		{364E2943-FD04-47E6-8B7F-AC5DFD3ABFAC}.Release|TwinCAT RT (x86).ActiveCfg = Release|TwinCAT RT (x86)
 		{A386633B-25AA-4CA6-AB67-769881C849B3}.Debug|TwinCAT CE7 (ARMV7).ActiveCfg = Debug|TwinCAT CE7 (ARMV7)
 		{A386633B-25AA-4CA6-AB67-769881C849B3}.Debug|TwinCAT CE7 (ARMV7).Build.0 = Debug|TwinCAT CE7 (ARMV7)
 		{A386633B-25AA-4CA6-AB67-769881C849B3}.Debug|TwinCAT HMI.ActiveCfg = Debug|TwinCAT RT (x86)

@@ -34,10 +34,45 @@
             "minItems": 2001,
             "type": "array"
         },
+        "PLC1.ARRAY (0..7) OF STRING(50)": {
+            "items": {
+                "allOf": [
+                    {
+                        "maxLength": 50
+                    },
+                    {
+                        "$ref": "tchmi:general#/definitions/String"
+                    }
+                ]
+            },
+            "maxItems": 8,
+            "minItems": 8,
+            "type": "array"
+        },
+        "PLC1.ARRAY (0..9) OF Alarms": {
+            "items": {
+                "$ref": "#/definitions/PLC1.Alarms"
+            },
+            "maxItems": 10,
+            "minItems": 10,
+            "type": "array"
+        },
         "PLC1.AlarmServer": {
             "properties": {
                 "AlarmData": {
                     "$ref": "#/definitions/PLC1.ARRAY (0..2000) OF Alarms"
+                },
+                "ColumnNames": {
+                    "$ref": "#/definitions/PLC1.ARRAY (0..7) OF STRING(50)"
+                },
+                "DBID": {
+                    "$ref": "tchmi:general#/definitions/UINT"
+                },
+                "OrderByColumn": {
+                    "$ref": "tchmi:general#/definitions/UINT"
+                },
+                "StartIndex": {
+                    "$ref": "tchmi:general#/definitions/UINT"
                 },
                 "bAckAlarm": {
                     "$ref": "tchmi:general#/definitions/BOOL"
@@ -48,14 +83,53 @@
                 "bClearAllAlarms": {
                     "$ref": "tchmi:general#/definitions/BOOL"
                 },
+                "dataReturned": {
+                    "$ref": "#/definitions/PLC1.ARRAY (0..9) OF Alarms"
+                },
+                "fbPLCDBRead": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/PLC1.Tc3_Database.FB_PLCDBReadEvt"
+                        },
+                        {
+                            "attributes": {
+                                "old_input_assignments": ""
+                            }
+                        }
+                    ]
+                },
+                "fbPLCDBWrite": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/PLC1.Tc3_Database.FB_PLCDBWriteEvt"
+                        },
+                        {
+                            "attributes": {
+                                "old_input_assignments": ""
+                            }
+                        }
+                    ]
+                },
                 "iValueChanged": {
                     "$ref": "tchmi:general#/definitions/INT"
+                },
+                "init": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
                 },
                 "irowSelected": {
                     "$ref": "tchmi:general#/definitions/INT"
                 },
                 "nrAlarms": {
                     "$ref": "tchmi:general#/definitions/UINT"
+                },
+                "sTable": {
+                    "$ref": "tchmi:general#/definitions/STRING(80)"
+                },
+                "tcMessage": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcMessage"
+                },
+                "tcMessageWrite": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcMessage"
                 }
             },
             "type": "object"
@@ -63,10 +137,10 @@
         "PLC1.Alarms": {
             "properties": {
                 "bIsAcknowledged": {
-                    "$ref": "tchmi:general#/definitions/BOOL"
+                    "$ref": "tchmi:general#/definitions/INT"
                 },
                 "bIsActive": {
-                    "$ref": "tchmi:general#/definitions/BOOL"
+                    "$ref": "tchmi:general#/definitions/INT"
                 },
                 "bIsUsed": {
                     "$ref": "tchmi:general#/definitions/BOOL"
@@ -90,10 +164,359 @@
                     "$ref": "tchmi:general#/definitions/UINT"
                 },
                 "uiRepeatCount": {
-                    "$ref": "tchmi:general#/definitions/UINT"
+                    "$ref": "tchmi:general#/definitions/DINT"
                 }
             },
             "type": "object"
+        },
+        "PLC1.STRING(255)(STRING(255))": {
+            "allOf": [
+                {
+                    "allOf": [
+                        {
+                            "maxLength": 255
+                        },
+                        {
+                            "$ref": "tchmi:general#/definitions/String"
+                        }
+                    ]
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "allOf": [
+                            {
+                                "maxLength": 255
+                            },
+                            {
+                                "$ref": "tchmi:general#/definitions/String"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "PLC1.Tc3_Database.E_VerifyResult": {
+            "allOf": [
+                {
+                    "attributes": {
+                        "qualified_only": ""
+                    },
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "options": [
+                        {
+                            "label": "check_None",
+                            "value": 0
+                        },
+                        {
+                            "label": "check_OK",
+                            "value": 1
+                        },
+                        {
+                            "label": "check_Error",
+                            "value": 2
+                        },
+                        {
+                            "label": "check_TypeWarning",
+                            "value": 3
+                        },
+                        {
+                            "label": "check_TypeError",
+                            "value": 4
+                        },
+                        {
+                            "label": "check_DataLengthWarning",
+                            "value": 5
+                        },
+                        {
+                            "label": "check_DataLengthError",
+                            "value": 6
+                        }
+                    ]
+                },
+                {
+                    "$ref": "tchmi:general#/definitions/INT16"
+                }
+            ]
+        },
+        "PLC1.Tc3_Database.E_VerifyResult(Tc3_Database.E_VerifyResult)": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.Tc3_Database.E_VerifyResult"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "$ref": "#/definitions/PLC1.Tc3_Database.E_VerifyResult"
+                    }
+                }
+            ]
+        },
+        "PLC1.Tc3_Database.FB_PLCDBReadEvt": {
+            "attributes": {
+                "no_explicit_call": "do not call this POU directly"
+            },
+            "properties": {
+                "_fbSQLDBResult": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/PLC1.Tc3_Database.FB_SQLResultEvt"
+                        },
+                        {
+                            "attributes": {
+                                "old_input_assignments": ""
+                            }
+                        }
+                    ]
+                },
+                "bBusy": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "bError": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "eTraceLevel": {
+                    "$ref": "#/definitions/PLC1.TcEventSeverity(TcEventSeverity)"
+                },
+                "fbSrceInfo": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.FB_TcSourceInfo"
+                },
+                "ipTcResult": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcMessage"
+                },
+                "nRecords": {
+                    "$ref": "#/definitions/PLC1.UDINT(UDINT)"
+                },
+                "sNetID": {
+                    "allOf": [
+                        {
+                            "maxLength": 23
+                        },
+                        {
+                            "$ref": "tchmi:general#/definitions/String"
+                        }
+                    ]
+                },
+                "tTimeout": {
+                    "$ref": "tchmi:general#/definitions/TIME"
+                }
+            },
+            "type": "object"
+        },
+        "PLC1.Tc3_Database.FB_PLCDBWriteEvt": {
+            "attributes": {
+                "hide_all_locals": "",
+                "no_explicit_call": "do not call this POU directly"
+            },
+            "properties": {
+                "bBusy": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "bError": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "eTraceLevel": {
+                    "$ref": "#/definitions/PLC1.TcEventSeverity(TcEventSeverity)"
+                },
+                "fbSrceInfo": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.FB_TcSourceInfo"
+                },
+                "ipTcResult": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcMessage"
+                },
+                "sNetID": {
+                    "allOf": [
+                        {
+                            "maxLength": 23
+                        },
+                        {
+                            "$ref": "tchmi:general#/definitions/String"
+                        }
+                    ]
+                },
+                "tTimeout": {
+                    "$ref": "tchmi:general#/definitions/TIME"
+                }
+            },
+            "type": "object"
+        },
+        "PLC1.Tc3_Database.FB_SQLResultEvt": {
+            "attributes": {
+                "hide_all_locals": "",
+                "no_explicit_call": "do not call this POU directly"
+            },
+            "properties": {
+                "bBusy": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "bError": {
+                    "$ref": "tchmi:general#/definitions/BOOL"
+                },
+                "eTraceLevel": {
+                    "$ref": "#/definitions/PLC1.TcEventSeverity(TcEventSeverity)"
+                },
+                "eVerifyResult": {
+                    "$ref": "#/definitions/PLC1.Tc3_Database.E_VerifyResult(Tc3_Database.E_VerifyResult)"
+                },
+                "fbSrceInfo": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.FB_TcSourceInfo"
+                },
+                "ipTcResult": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcMessage"
+                },
+                "nDataCount": {
+                    "$ref": "#/definitions/PLC1.UDINT(UDINT)"
+                },
+                "sNetID": {
+                    "allOf": [
+                        {
+                            "maxLength": 23
+                        },
+                        {
+                            "$ref": "tchmi:general#/definitions/String"
+                        }
+                    ]
+                },
+                "tTimeout": {
+                    "$ref": "tchmi:general#/definitions/TIME"
+                }
+            },
+            "type": "object"
+        },
+        "PLC1.Tc3_EventLogger.FB_TcSourceInfo": {
+            "attributes": {
+                "TcImplements": "Tc3_EventLogger.I_TcSourceInfo",
+                "no_explicit_call": "do not call this POU directly"
+            },
+            "properties": {
+                "nId": {
+                    "$ref": "#/definitions/PLC1.UDINT(UDINT)"
+                },
+                "sName": {
+                    "$ref": "#/definitions/PLC1.STRING(255)(STRING(255))"
+                }
+            },
+            "type": "object"
+        },
+        "PLC1.Tc3_EventLogger.I_TcMessage": {
+            "properties": {
+                "eSeverity": {
+                    "$ref": "#/definitions/PLC1.TcEventSeverity(TcEventSeverity)"
+                },
+                "ipSourceInfo": {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcSourceInfo(Tc3_EventLogger.I_TcSourceInfo)"
+                },
+                "nEventId": {
+                    "$ref": "#/definitions/PLC1.UDINT(UDINT)"
+                },
+                "sEventClassName": {
+                    "$ref": "#/definitions/PLC1.STRING(255)(STRING(255))"
+                },
+                "sEventText": {
+                    "$ref": "#/definitions/PLC1.STRING(255)(STRING(255))"
+                }
+            },
+            "type": "object"
+        },
+        "PLC1.Tc3_EventLogger.I_TcSourceInfo": {
+            "properties": {
+                "nId": {
+                    "$ref": "#/definitions/PLC1.UDINT(UDINT)"
+                },
+                "sName": {
+                    "$ref": "#/definitions/PLC1.STRING(255)(STRING(255))"
+                }
+            },
+            "type": "object"
+        },
+        "PLC1.Tc3_EventLogger.I_TcSourceInfo(Tc3_EventLogger.I_TcSourceInfo)": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcSourceInfo"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "$ref": "#/definitions/PLC1.Tc3_EventLogger.I_TcSourceInfo"
+                    }
+                }
+            ]
+        },
+        "PLC1.TcEventSeverity": {
+            "allOf": [
+                {
+                    "attributes": {
+                        "plcAttribute_qualified_only": "",
+                        "plcAttribute_strict": ""
+                    },
+                    "enum": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
+                    "options": [
+                        {
+                            "label": "TCEVENTSEVERITY_Verbose",
+                            "value": 0
+                        },
+                        {
+                            "label": "TCEVENTSEVERITY_Info",
+                            "value": 1
+                        },
+                        {
+                            "label": "TCEVENTSEVERITY_Warning",
+                            "value": 2
+                        },
+                        {
+                            "label": "TCEVENTSEVERITY_Error",
+                            "value": 3
+                        },
+                        {
+                            "label": "TCEVENTSEVERITY_Critical",
+                            "value": 4
+                        }
+                    ]
+                },
+                {
+                    "$ref": "tchmi:general#/definitions/INT16"
+                }
+            ]
+        },
+        "PLC1.TcEventSeverity(TcEventSeverity)": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.TcEventSeverity"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "$ref": "#/definitions/PLC1.TcEventSeverity"
+                    }
+                }
+            ]
+        },
+        "PLC1.UDINT(UDINT)": {
+            "allOf": [
+                {
+                    "$ref": "tchmi:general#/definitions/UDINT"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "$ref": "tchmi:general#/definitions/UDINT"
+                    }
+                }
+            ]
         }
     },
     "DEFLATECOMPRESSIONLEVEL": 5,
@@ -2068,6 +2491,16 @@
             "MAPPING": "PLC1::MAIN::Alarms",
             "SCHEMA": {
                 "$ref": "tchmi:server#/definitions/PLC1.AlarmServer"
+            },
+            "USEMAPPING": true
+        },
+        "PLC1.MAIN.Berra": {
+            "ACCESS": 3,
+            "CUSTOMERDATA": "",
+            "DOMAIN": "ADS",
+            "MAPPING": "PLC1::MAIN::Berra",
+            "SCHEMA": {
+                "$ref": "tchmi:general#/definitions/BOOL"
             },
             "USEMAPPING": true
         },

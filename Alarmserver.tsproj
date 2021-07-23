@@ -7,6 +7,7 @@
 			</Settings>
 			<Licenses>
 				<Target>
+					<ManualSelect>{648F394E-7DD1-499C-8112-7C38E161A94C}</ManualSelect>
 					<ManualSelect>{92583661-35AE-45CE-BD4F-C35BFE16F07E}</ManualSelect>
 				</Target>
 			</Licenses>
