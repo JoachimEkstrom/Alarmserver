@@ -15,6 +15,22 @@
       "propertySetterName": "setAlarmData",
       "propertyGetterName": "getAlarmData",
       "refTo": ""
+    },
+    {
+      "name": "data-tchmi-alarms",
+      "displayName": "Alarms",
+      "visible": true,
+      "type": "tchmi:general#/definitions/Array",
+      "category": "",
+      "description": "",
+      "requiredOnCompile": false,
+      "readOnly": false,
+      "bindable": true,
+      "heritable": true,
+      "propertyName": "Alarms",
+      "propertySetterName": "setAlarms",
+      "propertyGetterName": "getAlarms",
+      "refTo": ""
     }
   ],
   "virtualRights": [],

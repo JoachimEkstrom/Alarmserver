@@ -17,6 +17,7 @@ VAR
 	AckAll: BOOL;
 	READ: BOOL;
 
+	number: INT := 5;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -26,7 +27,7 @@ IF Berra THEN
 	startTime:= F_GetActualDcTime64();
 	Berra := FALSE;
 		
-	FOR i:=0 TO 5 DO 
+	FOR i:=0 TO number DO 
 		Alarms.NewAlarm(sName:=INT_TO_STRING(i), sAlarmText:= 'Ett nytt larm');
 	END_FOR
 	

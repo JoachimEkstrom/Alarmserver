@@ -3,7 +3,7 @@
 
   </div>
 
-<div id="UserControl2_1" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="900" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-target-user-control="AlarmViewer.usercontrol" data-tchmi-top="87" data-tchmi-top-unit="px" data-tchmi-width="1700" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-alarmdata="%s%PLC1.MAIN.Alarms%/s%">
+<div id="UserControl2_1" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="900" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-target-user-control="AlarmViewer.usercontrol" data-tchmi-top="87" data-tchmi-top-unit="px" data-tchmi-width="1700" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-alarmdata="%s%PLC1.MAIN.Alarms%/s%" data-tchmi-alarms="%i%Alarmserver_alarms%/i%">
 
 </div>
 

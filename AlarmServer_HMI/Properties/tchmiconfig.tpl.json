@@ -55,6 +55,12 @@
         "type": "tchmi:general#/definitions/String",
         "persist": false,
         "readonly": false
+      },
+      "Alarmserver_alarms": {
+        "value": [],
+        "type": "tchmi:general#/definitions/Array",
+        "persist": true,
+        "readonly": false
       }
     }
   },
