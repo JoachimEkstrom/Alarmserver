@@ -167,7 +167,7 @@
                             dbArr = []
                         })
                 }
-                i++
+                i++//
             }
 
             await postData('http://127.0.0.1:4000/addrows', dbArr/*{ sName: alarm.sName, bIsActive: alarm.bIsActive, bIsAcknowledged: alarm.bIsAcknowledged, sAlarmText: alarm.sAlarmText, tActiveStartTime: alarm.tActiveStartTime, tAcknowlegedTime: alarm.tAcknowlegedTime, tClearedTime: alarm.tClearedTime, uiRepeatCount: alarm.uiRepeatCount }*/)
