@@ -23,7 +23,7 @@
     <EnableTypeScript>true</EnableTypeScript>
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
     <Name>AlarmServer_HMI</Name>
-    <HmiCommunicationRouterPort>10111</HmiCommunicationRouterPort>
+    <HmiCommunicationRouterPort>10115</HmiCommunicationRouterPort>
     <HmiCommunicationServerAuthPort>13001</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.746.3</HmiInitial>
     <HmiRecent>1.12.746.3</HmiRecent>
@@ -115,13 +115,8 @@
   <Target Name="ReBuild" DependsOnTargets="Clean; Build" />
   <Target Name="Clean" DependsOnTargets="BaseClean" />
   <ItemGroup>
-    <Content Include="AlarmViewer.usercontrol">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="AlarmViewer.usercontrol.json">
-      <SubType>Content</SubType>
-      <DependentUpon>AlarmViewer.usercontrol</DependentUpon>
-    </Content>
+    <Folder Include="Contents\Alarmserver" />
+    <Folder Include="Contents\AlarmViewer" />
     <Folder Include="Fonts\" />
     <Folder Include="Images" />
     <Folder Include="Images\Manifest" />
@@ -130,12 +125,39 @@
     <Folder Include="Imports\Videos" />
     <Folder Include="KeyboardLayouts\" />
     <Folder Include="Localization" />
+    <Folder Include="Contents" />
+    <Folder Include="Server\TcHmiEventLogger" />
     <Folder Include="Themes" />
     <Folder Include="Themes\Base\" />
     <Folder Include="Server" />
     <Folder Include="Properties" />
     <Content Include=".eslintrc.json">
       <Visible>false</Visible>
+    </Content>
+    <Content Include="Contents\Alarmserver\Alarmserver.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Contents\Alarmserver\AlarmViewer.usercontrol">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Contents\Alarmserver\AlarmViewer.usercontrol.json">
+      <SubType>Content</SubType>
+      <DependentUpon>Contents\Alarmserver\AlarmViewer.usercontrol</DependentUpon>
+    </Content>
+    <Content Include="Contents\AlarmViewer\BeckhoffAlarmViewerLog.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Contents\AlarmViewer\BeckhoffAlarmViewer.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiEventLogger\TcHmiEventLogger.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiEventLogger\TcHmiEventLogger.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiEventLogger\TcHmiEventLogger.Storage.json">
+      <SubType>Content</SubType>
     </Content>
     <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">
       <SubType>Content</SubType>

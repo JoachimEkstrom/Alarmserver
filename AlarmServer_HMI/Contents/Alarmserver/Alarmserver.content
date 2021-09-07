@@ -1,0 +1,7 @@
+﻿<div id="Alarmserver" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="1700" data-tchmi-height="900">
+
+<div id="UserControl2_1" data-tchmi-type="TcHmi.Controls.System.TcHmiUserControlHost" data-tchmi-height="900" data-tchmi-height-unit="px" data-tchmi-left="0" data-tchmi-left-unit="px" data-tchmi-target-user-control="Contents/Alarmserver/AlarmViewer.usercontrol" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="1700" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-alarmdata="%s%PLC1.MAIN.Alarms%/s%" data-tchmi-alarms="%s%Alarmserver_alarms%/s%">
+
+</div>
+
+</div>

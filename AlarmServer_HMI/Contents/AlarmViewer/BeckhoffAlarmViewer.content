@@ -1,0 +1,69 @@
+﻿<div id="Content1" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="1700" data-tchmi-height="900">
+
+<div id="TcHmiEventGrid" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEventGrid" data-tchmi-height="900" data-tchmi-height-unit="px" data-tchmi-left="0" data-tchmi-left-unit="px" data-tchmi-server-interval="1000" data-tchmi-show-menu-bar="false" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="1700" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-button-font-size-unit="px" data-tchmi-button-height-unit="px" data-tchmi-header-font-size-unit="px" data-tchmi-grid-font-size-unit="px" data-tchmi-header-height-unit="px" data-tchmi-row-height-unit="px" data-tchmi-background-image-width-unit="px" data-tchmi-background-image-height-unit="px">
+<script data-tchmi-target-attribute="data-tchmi-filter" type="application/json">
+[
+  {
+    "path": "domain",
+    "comparator": "==",
+    "value": "TcHmiEventLogger"
+  },
+  {
+    "logic": "AND"
+  },
+  {
+    "path": "alarmState",
+    "comparator": "==",
+    "value": 0
+  },
+  {
+    "logic": "OR"
+  },
+  {
+    "path": "alarmState",
+    "comparator": "==",
+    "value": 1
+  }
+]
+</script>
+<script data-tchmi-target-attribute="data-tchmi-columns" type="application/json">
+[
+  {
+    "columnName": "alarmState",
+    "width": 10,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "severity",
+    "width": 3,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "timeAndDateRaised",
+    "width": 15,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "text",
+    "width": 57,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "timeAndDateConfirmed",
+    "width": 15,
+    "widthUnit": "%"
+  }
+]
+</script>
+<script data-tchmi-target-attribute="data-tchmi-sorting" type="application/json">
+[
+  {
+    "name": "timeRaised",
+    "order": "Descending"
+  }
+]
+</script>
+
+</div>
+
+</div>

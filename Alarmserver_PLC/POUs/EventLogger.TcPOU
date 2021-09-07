@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="EventLogger" Id="{276dd7fb-18e2-4dad-96f4-303888d2e089}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK EventLogger
+VAR
+    bInit : BOOL := TRUE; 
+    bRaise : BOOL := FALSE; 
+	bConfirm : BOOL := FALSE; 
+	bClear : BOOL := FALSE; 
+
+	newAlarm	: FB_Alarm;
+	newWarning	: FB_Alarm;
+	event3		: FB_Alarm;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+newAlarm(
+	Alarm_Event:= TC_EVENTS.WindWings.Encoder_No_Response, 
+	bInit:= bInit, 
+	bRaise:= bRaise, 
+	bConfirm:= bConfirm , 
+	bClear:= bClear);
+
+
+newWarning(
+	Alarm_Event:= TC_EVENTS.WindWings.Encoder_Warning, 
+	bInit:= bInit, 
+	bRaise:= bRaise, 
+	bConfirm:= bConfirm , 
+	bClear:= bClear);
+	
+event3(
+	Alarm_Event:= TC_EVENTS.WindWings.EventMedNamn3, 
+	bInit:= bInit, 
+	bRaise:= bRaise, 
+	bConfirm:= bConfirm , 
+	bClear:= bClear);
+
+	
+	bInit := FALSE; 
+    bRaise := FALSE; 
+	bConfirm := FALSE; 
+	bClear := FALSE; ]]></ST>
+    </Implementation>
+    <LineIds Name="EventLogger">
+      <LineId Id="66" Count="0" />
+      <LineId Id="70" Count="4" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="76" Count="5" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="99" Count="4" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="85" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

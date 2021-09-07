@@ -121,14 +121,28 @@
         let dbalarms = Array(2000)
         let isSelected
         let isSelectedOld
+
+      // setInterval(() => {
+     //       getData()
+    //   }, 1000)
+
         function getData() {
             TcHmi.Symbol.readEx2('%pp%AlarmData::AlarmData%/pp%', function (data) {
                 if (data.error === TcHmi.Errors.NONE) {
                     // Handle result value... 
                     //console.log(data.value)
                     alarms = data.value;
-                    writeDb();
-                    updateAlarmList(alarms);
+                    TcHmi.Symbol.readEx2('%pp%Alarms%/pp%', function (data) {
+                        if (data.error === TcHmi.Errors.NONE) {
+                            // Handle result value... 
+
+                            dbalarms = JSON.parse(JSON.stringify(data.value));
+                            writeDb();
+                            
+                        }
+
+                    })
+
                 }
 
             })
@@ -136,21 +150,14 @@
 
         async function writeDb() {
             let i = 0;
-            let update = false 
-            let dbArr = []
-            TcHmi.Symbol.readEx2('%pp%Alarms%/pp%', function (data) {
-                if (data.error === TcHmi.Errors.NONE) {
-                    // Handle result value... 
-                    
-                    dbalarms = data.value;
-                }
+            let update = false
+            let dbArr = [] 
 
-            })
             let t0 = performance.now();
 
             for (const alarm of alarms) {
                 if ((JSON.stringify(alarm) !== JSON.stringify(dbalarms[i])) && alarm.bIsUsed) {
-                   // console.log("Found stuff for DB")
+                    console.log("Found stuff for DB")
                     dbArr.push(JSON.parse(JSON.stringify(alarm)))
 
                     if (alarm.tClearedTime !== "") {
@@ -163,11 +170,13 @@
                         alarm.tAcknowlegedTime = ""
                         alarm.tClearedTime = ""
                         alarm.uiRepeatCount = 0
-                        if (!update) {
-                            update = true
-                        }
+
                     }
-                    if (i === 200) {
+                    if (update === false) {
+                        update = true
+                        console.log("here", update)
+                    }
+                    if (i === 100) {
                         console.log(dbArr.length)
                         i = 0;
                         await postData('http://127.0.0.1:4000/addrows', dbArr )
@@ -178,37 +187,45 @@
                         console.log(dbArr.length)
                     }
 
-                i++
+                
                 }
+                i++
             }
             // A http request body cannot be to large, if more than 250 event send these as a first chunk. 
-            console.log(dbArr)
+            console.log("dbarr ", dbArr)
             if (dbArr.length > 0) {
                 await postData('http://127.0.0.1:4000/addrows', dbArr)
                     .then(data => {
                         //console.log(data);
+                        dbArr = []
+                        console.log("dbarr ", dbArr)
                     })
             }
 
-            dbalarms = alarms
+            dbalarms = JSON.parse(JSON.stringify(alarms))
 
             let t1 = performance.now();
             console.log(`Update Database took ${t1 - t0} milliseconds.`);
 
             if (update) {
+                update = false
                 TcHmi.Symbol.writeEx('%pp%AlarmData::AlarmData%/pp%', alarms, function (data) {
                     if (data.error === TcHmi.Errors.NONE) {
                         // Handle success... 
-                        console.log("OK")
-                    } else {
-                        // Handle error... 
-                        console.log("NOTOK")
-                    }
-                });
-                TcHmi.Symbol.writeEx('%pp%Alarms%/pp%', dbalarms, function (data) {
-                    if (data.error === TcHmi.Errors.NONE) {
-                        // Handle success... 
-                        console.log("OK")
+                        console.log("Updating Alarmdata in PLC.")
+
+                        TcHmi.Symbol.writeEx('%pp%Alarms%/pp%', dbalarms, function (data) {
+                            if (data.error === TcHmi.Errors.NONE) {
+                                // Handle success... 
+                                console.log("Updating internal(old) Alarms list")
+                                updateAlarmList(alarms);
+
+                            } else {
+                                // Handle error... 
+                                console.log("NOTOK")
+                            }
+                        });
+
                     } else {
                         // Handle error... 
                         console.log("NOTOK")
@@ -216,6 +233,9 @@
                 });
 
 
+
+                
+            } else {
                 updateAlarmList(alarms);
             }
         }
@@ -233,59 +253,61 @@
             table.appendChild(newTbody);
 
 
-            for (let i = 0; i < alarms.length; i++) {
-                if (alarms[i].bIsUsed) {
-                    let tr = document.createElement('tr')
-                    tr.addEventListener('click', function () { selectRow(this) });
+           for (let i = 0; i < alarms.length; i++){
+               
+                let tr = document.createElement('tr')
+                tr.addEventListener('click', function () { selectRow(this) });
 
-                    let sName = document.createElement('td')
-                    sName.innerHTML = alarms[i].sName;
-                    sName.className = "sName";
-                    tr.appendChild(sName)
+                let sName = document.createElement('td')
+                sName.innerHTML = alarms[i].sName;
+                sName.className = "sName";
+                tr.appendChild(sName)
 
-                    let isActive = document.createElement('td')
-                    isActive.innerHTML = alarms[i].bIsActive;
-                    isActive.className = "isActive";
-                    tr.appendChild(isActive)
+                let isActive = document.createElement('td')
+                isActive.innerHTML = alarms[i].bIsActive;
+                isActive.className = "isActive";
+                tr.appendChild(isActive)
 
-                    let isAck = document.createElement('td')
-                    isAck.innerHTML = alarms[i].bIsAcknowledged;
-                    isAck.className = "isAck";
-                    tr.appendChild(isAck)
+                let isAck = document.createElement('td')
+                isAck.innerHTML = alarms[i].bIsAcknowledged;
+                isAck.className = "isAck";
+                tr.appendChild(isAck)
 
-                    let sAlarmText = document.createElement('td')
-                    sAlarmText.innerHTML = alarms[i].sAlarmText;
-                    sAlarmText.className = "sAlarmText";
-                    tr.appendChild(sAlarmText)
+                let sAlarmText = document.createElement('td')
+                sAlarmText.innerHTML = alarms[i].sAlarmText;
+                sAlarmText.className = "sAlarmText";
+                tr.appendChild(sAlarmText)
 
-                    let tActiveStartTime = document.createElement('td')
-                    tActiveStartTime.innerHTML = alarms[i].tActiveStartTime.slice(0, 19);
-                    tActiveStartTime.className = "tActiveStartTime";
-                    tr.appendChild(tActiveStartTime)
+                let tActiveStartTime = document.createElement('td')
+                tActiveStartTime.innerHTML = alarms[i].tActiveStartTime.slice(0, 19);
+                tActiveStartTime.className = "tActiveStartTime";
+                tr.appendChild(tActiveStartTime)
 
-                    let tAcknowlegedTime = document.createElement('td')
-                    tAcknowlegedTime.innerHTML = alarms[i].tAcknowlegedTime.slice(0, 19);
-                    tAcknowlegedTime.className = "tAcknowlegedTime";
-                    tr.appendChild(tAcknowlegedTime)
+                let tAcknowlegedTime = document.createElement('td')
+                tAcknowlegedTime.innerHTML = alarms[i].tAcknowlegedTime.slice(0, 19);
+                tAcknowlegedTime.className = "tAcknowlegedTime";
+                tr.appendChild(tAcknowlegedTime)
 
-                    let uiRepeatCount = document.createElement('td')
-                    uiRepeatCount.innerHTML = alarms[i].uiRepeatCount;
-                    uiRepeatCount.className = "uiRepeatCount";
-                    tr.appendChild(uiRepeatCount)
+                let uiRepeatCount = document.createElement('td')
+                uiRepeatCount.innerHTML = alarms[i].uiRepeatCount;
+                uiRepeatCount.className = "uiRepeatCount";
+                tr.appendChild(uiRepeatCount)
 
-                    if (alarms[i].bIsActive && !alarms[i].bIsAcknowledged) {
-                        tr.style.backgroundColor = "red";
-                    } else if (alarms[i].bIsActive && alarms[i].bIsAcknowledged) {
-                        tr.style.backgroundColor = "yellow";
-                    }
-                    if (i === isSelected && isSelectedOld !== isSelected) {
-                        tr.style.backgroundColor = "pink";
-                        isSelectedOld = isSelected
-                    }
+                if (alarms[i].bIsActive && !alarms[i].bIsAcknowledged) {
+                    tr.style.backgroundColor = "red";
+                } else if (alarms[i].bIsActive && alarms[i].bIsAcknowledged) {
+                    tr.style.backgroundColor = "yellow";
+                }
+                if (i === isSelected /*&& isSelectedOld !== isSelected*/) {
+                    tr.style.backgroundColor = "pink";
+                    //isSelectedOld = isSelected
+                }
                             
-                    let tbody = document.getElementById('tbody');
+                let tbody = document.getElementById('tbody');
+                if (alarms[i].bIsUsed) {
                     tbody.appendChild(tr)
                 }
+                
 
             }
             let t1 = performance.now();
@@ -333,7 +355,7 @@
                 referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(data) // body data type must match "Content-Type" header
             });
-            console.log(JSON.stringify(data))
+            //console.log(JSON.stringify(data))
             //return response.json(); // parses JSON response into native JavaScript objects
             return response.status
         }
@@ -441,7 +463,7 @@
 </script>
 </div>
 
-<div id="TcHmiButton_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="125" data-tchmi-left-unit="px" data-tchmi-text="Generate Alarms" data-tchmi-top="825" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+<div id="TcHmiButton_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="125" data-tchmi-left-unit="px" data-tchmi-text="Generate Alarms" data-tchmi-top="830" data-tchmi-top-unit="px" data-tchmi-width="110" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
 
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">

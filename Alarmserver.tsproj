@@ -1,5 +1,57 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.17">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{2C2E5BCC-3C86-4A70-A14E-5139C1B62797}" Namespace="TC_Eventlogger" PersistentType="true">A1PT01_HighAlarm</Name>
+			<DisplayName TxtId=""><![CDATA[A1PT01_HighAlarm]]></DisplayName>
+			<EventId>
+				<Name Id="1">Event</Name>
+				<DisplayName TxtId=""><![CDATA[High Alarm on 1PT01]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{AE6FD477-DA76-4A92-9112-86162C476D63}"/>
+				<Hide GUID="{F7872BDD-3C7C-4806-880A-6887EC127475}"/>
+				<Hide GUID="{6C7E847C-E9ED-473D-8568-8024C2012904}"/>
+				<Hide GUID="{75A89DF0-3FB6-4173-989B-D8D5DED8B24B}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{5105D1B0-28D7-4996-B981-5BB7DD303F46}" PersistentType="true">WindWings</Name>
+			<DisplayName TxtId=""><![CDATA[WindWings]]></DisplayName>
+			<EventId>
+				<Name Id="1">Encoder_No_Response</Name>
+				<DisplayName TxtId=""><![CDATA[Encoder_error: No Response from sensor]]></DisplayName>
+				<Comment TxtId=""><![CDATA[Testing the comment]]></Comment>
+				<DescriptionText TxtId=""><![CDATA[This is a Description]]></DescriptionText>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="2">Encoder_Warning</Name>
+				<DisplayName TxtId=""><![CDATA[There is a warning now.]]></DisplayName>
+				<Comment TxtId=""><![CDATA[There is a warning now.]]></Comment>
+				<DescriptionText TxtId=""><![CDATA[There is a warning now.]]></DescriptionText>
+				<Severity>Warning</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="3">EventMedNamn3</Name>
+				<DisplayName TxtId=""><![CDATA[EventMedNamn3_DisplayText]]></DisplayName>
+				<Comment TxtId=""><![CDATA[EventMedNamn3_Comment]]></Comment>
+				<DescriptionText TxtId=""><![CDATA[EventMedNamn3_DescriptionText]]></DescriptionText>
+				<Severity>Error</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{7D949769-8795-4F6B-A8F3-9B8D402DD6A9}"/>
+				<Hide GUID="{5908601A-FFFE-42F1-BA8D-A34006AC16E7}"/>
+				<Hide GUID="{624023F2-8BFE-4298-923C-8A6B11BE4950}"/>
+				<Hide GUID="{08DB0D8E-B733-41FB-8DD1-F134804E9DC4}"/>
+				<Hide GUID="{D835F238-4F9B-4BD0-9A4D-9F9D29F2E2BB}"/>
+				<Hide GUID="{A641C999-839E-4EE6-9F06-1C8A792BB118}"/>
+				<Hide GUID="{3913CAF3-4437-4C3F-8545-5D01F63AE726}"/>
+				<Hide GUID="{2B04521F-D87F-40B1-B63F-7CFCBFE6FBF5}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
 	<Project ProjectGUID="{9FA72CB9-B859-46DD-90B0-12E7B9C2F0EE}" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings>
@@ -18,7 +70,7 @@
 			</Tasks>
 		</System>
 		<Plc>
-			<Project GUID="{A386633B-25AA-4CA6-AB67-769881C849B3}" Name="Alarmserver_PLC" PrjFilePath="Alarmserver_PLC\Alarmserver_PLC.plcproj" TmcFilePath="Alarmserver_PLC\Alarmserver_PLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+			<Project GUID="{A386633B-25AA-4CA6-AB67-769881C849B3}" Name="Alarmserver_PLC" PrjFilePath="Alarmserver_PLC\Alarmserver_PLC.plcproj" TmcFilePath="Alarmserver_PLC\Alarmserver_PLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" SymbolicMapping="true">
 				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Alarmserver_PLC\Alarmserver_PLC.tmc">
 					<Name>Alarmserver_PLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>

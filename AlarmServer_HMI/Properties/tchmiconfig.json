@@ -37,10 +37,26 @@
   ],
   "userControls": [
     {
-      "url": "AlarmViewer.usercontrol"
+      "url": "Contents/Alarmserver/AlarmViewer.usercontrol"
     }
   ],
-  "content": [],
+  "content": [
+    {
+      "url": "Contents/Alarmserver/Alarmserver.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Contents/AlarmViewer/BeckhoffAlarmViewer.content",
+      "preload": false,
+      "keepAlive": false
+    },
+    {
+      "url": "Contents/AlarmViewer/BeckhoffAlarmViewerLog.content",
+      "preload": false,
+      "keepAlive": false
+    }
+  ],
   "views": [
     {
       "url": "Desktop.view",

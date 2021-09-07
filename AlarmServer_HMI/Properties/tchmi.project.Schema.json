@@ -13,7 +13,7 @@
       "frameworkControlNamespace": "TcHmi.Controls.Beckhoff",
       "frameworkControlType": "TcHmi.Controls.System.TcHmiUserControl",
       "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
-      "frameworkUserControlConfig": "AlarmViewer.usercontrol.json",
+      "frameworkUserControlConfig": "Contents\\Alarmserver\\AlarmViewer.usercontrol.json",
       "id": "tchmi:project#/definitions/UserControl2",
       "type": "object"
     },
@@ -91,8 +91,8 @@
       "frameworkControlType": "TcHmi.Controls.System.TcHmiUserControl",
       "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
       "frameworkUserControlConfig": "AlarmViewer.usercontrol.json",
-      "type": "object",
-      "id": "tchmi:project#/definitions/AlarmViewer"
+      "id": "tchmi:project#/definitions/AlarmViewer",
+      "type": "object"
     }
   }
 }

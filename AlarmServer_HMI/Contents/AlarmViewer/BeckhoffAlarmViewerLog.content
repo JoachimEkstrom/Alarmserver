@@ -1,0 +1,123 @@
+﻿<div id="Content1_1" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="1700" data-tchmi-height="900">
+
+<div id="TcHmiEventGrid_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEventGrid" data-tchmi-height="900" data-tchmi-height-unit="px" data-tchmi-left="0" data-tchmi-left-unit="px" data-tchmi-server-interval="1000" data-tchmi-show-menu-bar="True" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="1700" data-tchmi-width-unit="px" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-button-font-size-unit="px" data-tchmi-button-height-unit="px">
+<script data-tchmi-target-attribute="data-tchmi-filter" type="application/json">
+[
+  {
+    "path": "domain",
+    "comparator": "==",
+    "value": "TcHmiEventLogger"
+  },
+  {
+    "logic": "AND"
+  },
+  {
+    "path": "timeRaised",
+    "comparator": ">",
+    "value": null
+  },
+  {
+    "logic": "AND"
+  },
+  {
+    "path": "timeRaised",
+    "comparator": "<",
+    "value": null
+  }
+]
+</script>
+<script data-tchmi-target-attribute="data-tchmi-columns" type="application/json">
+[
+  {
+    "columnName": "alarmState",
+    "width": 10,
+    "widthUnit": "%",
+    "sortable": true
+  },
+  {
+    "columnName": "severity",
+    "width": 3,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "timeAndDateRaised",
+    "width": 10,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "text",
+    "width": 57,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "timeAndDateConfirmed",
+    "width": 10,
+    "widthUnit": "%"
+  },
+  {
+    "columnName": "timeAndDateCleared",
+    "width": 10,
+    "widthUnit": "%"
+  }
+]
+</script>
+<script data-tchmi-target-attribute="data-tchmi-sorting" type="application/json">
+[
+  {
+    "name": "timeRaised",
+    "order": "Descending"
+  }
+]
+</script>
+
+</div>
+
+<div id="TcHmiButton_13" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="632" data-tchmi-left-unit="px" data-tchmi-text="getDataXlsx" data-tchmi-top="5" data-tchmi-top-unit="px" data-tchmi-width="117" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiButton_13.onPressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "let csvContent\nfetch('http://localhost:4000/xlsx')\n  .then(response => response.blob())\n  .then(blob => {\t\n           var url = window.URL.createObjectURL(blob);\n            var a = document.createElement('a');\n            a.href = url;\n            a.download = \"WindWings_Report_\" + Date.now() + \".xlsx\";\n            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox\n            a.click();    \n            a.remove();  //afterwards we remove the element again   \n\t      })\n"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiButton_14" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="759" data-tchmi-left-unit="px" data-tchmi-text="getDataPdf" data-tchmi-top="5" data-tchmi-top-unit="px" data-tchmi-width="117" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiButton_14.onPressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "let csvContent\nfetch('http://localhost:4000/pdf')\n  .then(response => response.blob())\n  .then(blob => {\t\n           var url = window.URL.createObjectURL(blob);\n            var a = document.createElement('a');\n            a.href = url;\n            a.download = \"WindWings_Report_\" + Date.now() + \".pdf\";\n            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox\n            a.click();    \n            a.remove();  //afterwards we remove the element again   \n\t      })\n"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+</div>

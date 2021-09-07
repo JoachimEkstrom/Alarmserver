@@ -4,6 +4,7 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	Alarms : AlarmServer;	
+	Events: Eventlogger;
 	Berra: BOOL;
 	Baz: BOOL;
 	Ack: BOOL;
@@ -22,8 +23,10 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[Alarms();
+Events();
 
 IF Berra THEN
+
 	startTime:= F_GetActualDcTime64();
 	Berra := FALSE;
 		
@@ -81,8 +84,11 @@ IF READ THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="66" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="67" Count="0" />
       <LineId Id="11" Count="0" />
+      <LineId Id="150" Count="0" />
       <LineId Id="81" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="17" Count="0" />
